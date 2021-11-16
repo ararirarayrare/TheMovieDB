@@ -3,8 +3,8 @@ import SDWebImage
 
 class DetailsViewController: UIViewController {
     @IBOutlet weak var genresLabel: UILabel!
-    @IBOutlet weak var backdrop: UIImageView!
-    @IBOutlet weak var poster: UIImageView!
+    @IBOutlet weak var backdropImageView: UIImageView!
+    @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var adultLabel: UILabel!
     @IBOutlet weak var originalLanguageLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,6 +19,11 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         configureWith()
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.posterImageView.clipsToBounds = true
+        self.posterImageView.layer.cornerRadius = 10
+    }
     
     
 // MARK: - My functions. DetailsViewController configuration.
@@ -27,12 +32,12 @@ class DetailsViewController: UIViewController {
         if let backdropPath = movie?.backdrop_path {
             let imageURLString = "https://image.tmdb.org/t/p/w500/" + backdropPath
             let imageURL = URL(string: imageURLString)
-            backdrop.sd_setImage(with: imageURL, completed: nil)
+            backdropImageView.sd_setImage(with: imageURL, completed: nil)
             }
         if let posterPath = movie?.poster_path {
             let imageURLString = "https://image.tmdb.org/t/p/w500/" + posterPath
             let imageURL = URL(string: imageURLString)
-            poster.sd_setImage(with: imageURL, completed: nil)
+            posterImageView.sd_setImage(with: imageURL, completed: nil)
         }
         if let title = movie?.original_title ?? movie?.original_name ?? movie?.title {
             self.titleLabel.text = title

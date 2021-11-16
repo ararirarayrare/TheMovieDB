@@ -5,7 +5,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var segmentSelector: UISegmentedControl!
     @IBOutlet weak var mainNavigationItem: UINavigationItem!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     private var moviesList: [Movie] = []
     private var selectedSegmentTitle: String = "movie" {
@@ -17,13 +17,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchMovies()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        setupNavigationBar()
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
         self.searchBar.delegate = self
-       
-        let cellName = String(describing: MovieCellTableViewCell.self)
+        let cellName = String(describing: MovieCollectionViewCell.self)
         let cellNib = UINib(nibName: cellName, bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: cellName)
+        collectionView.register(cellNib, forCellWithReuseIdentifier: "MovieCollectionViewCell")
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
@@ -33,8 +33,6 @@ class ViewController: UIViewController {
             selectedSegmentTitle = "tv"
         }
     }
-    
-
 }
 
 // MARK: - SearchBar settings.
@@ -43,36 +41,34 @@ extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchMovies()
     }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchMovies()
         self.view.endEditing(true)
     }
 }
 
-// MARK: - TableView configuration.
+// MARK: - CollectionView configuration.
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return moviesList.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCellTableViewCell", for: indexPath) as? MovieCellTableViewCell {
-            cell.configureWith(moviesList[indexPath.row])
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell {
+            
+            cell.configure(with: moviesList[indexPath.item])
             return cell
         }
-        return UITableViewCell()
+        return UICollectionViewCell()
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (self.view.frame.width - 16) / 3
+        let height = width * 1.5
+        return CGSize(width: width, height: height)
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.endEditing(true)
-        let selectedMovie = moviesList[indexPath.row]
-        
+        let selectedMovie = moviesList[indexPath.item]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let detailsViewController = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController {
             var genres: [String] = []
@@ -84,25 +80,37 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             detailsViewController.movie = selectedMovie
             navigationController?.pushViewController(detailsViewController, animated: true)
         }
-        tableView.deselectRow(at: indexPath, animated: true)
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
+    
 
-// MARK: - My functions. Searching movies/tv.
+// MARK: - My functions.
 
 extension ViewController {
     func searchMovies() {
         if searchBar.text == "" {
             NetworkManager.shared.requestTrending(segmentTitle: selectedSegmentTitle) { moviesList in
                 self.moviesList = moviesList
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             }
         }
         if searchBar.text != "" {
             NetworkManager.shared.requestMovies(searchBar.text!, segmentTitle: selectedSegmentTitle) { moviesList in
                 self.moviesList = moviesList
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             }
         }
+    }
+    func setupNavigationBar() {
+        let label = UILabel()
+        label.text = "The Movie Data Base"
+        label.font = UIFont(name: "Arial Rounded MT Bold", size: 24)
+        label.textAlignment = .center
+        label.textColor = .white
+        navigationItem.titleView = label
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.tintColor = .white
     }
 }

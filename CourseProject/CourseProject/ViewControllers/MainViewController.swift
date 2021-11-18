@@ -1,29 +1,25 @@
 import UIKit
 
-class ViewController: UIViewController {
-
+class MainViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var segmentSelector: UISegmentedControl!
     @IBOutlet weak var mainNavigationItem: UINavigationItem!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private var moviesList: [Movie] = []
+    private var resultsList: [Result] = []
     private var selectedSegmentTitle: String = "movie" {
         didSet {
-           searchMovies()
+            searchResults()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchMovies()
+        searchResults()
         setupNavigationBar()
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.searchBar.delegate = self
-        let cellName = String(describing: MovieCollectionViewCell.self)
+        let cellName = String(describing: MainPageCollectionViewCell.self)
         let cellNib = UINib(nibName: cellName, bundle: nil)
-        collectionView.register(cellNib, forCellWithReuseIdentifier: "MovieCollectionViewCell")
+        collectionView.register(cellNib, forCellWithReuseIdentifier: "MainPageCollectionViewCell")
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
@@ -37,26 +33,26 @@ class ViewController: UIViewController {
 
 // MARK: - SearchBar settings.
 
-extension ViewController: UISearchBarDelegate {
+extension MainViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchMovies()
+        searchResults()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchMovies()
+        searchResults()
         self.view.endEditing(true)
     }
 }
 
 // MARK: - CollectionView configuration.
 
-extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return moviesList.count
+        return resultsList.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainPageCollectionViewCell", for: indexPath) as? MainPageCollectionViewCell {
             
-            cell.configure(with: moviesList[indexPath.item])
+            cell.configure(with: resultsList[indexPath.item])
             return cell
         }
         return UICollectionViewCell()
@@ -68,36 +64,41 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.endEditing(true)
-        let selectedMovie = moviesList[indexPath.item]
+        guard let searchId = resultsList[indexPath.item].id else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let detailsViewController = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController {
-            var genres: [String] = []
-            for item in selectedMovie.genre_ids! {
-                let genresList = NetworkManager.shared.genresId[item]
-                genres.append(genresList ?? "")
+        if selectedSegmentTitle == "movie" {
+            if let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
+                NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
+                    movieDetailsViewController.movie = movie
+                    NetworkManager.shared.requestVideoDetails(searchId) { videoList in
+                        movieDetailsViewController.videosList = videoList
+                        self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+                    }
+                }
             }
-            detailsViewController.genres = genres
-            detailsViewController.movie = selectedMovie
-            navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+        if selectedSegmentTitle == "tv" {
+            if let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController {
+                navigationController?.pushViewController(tvDetailsViewController, animated: true)
+            }
         }
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
-    
 
 // MARK: - My functions.
 
-extension ViewController {
-    func searchMovies() {
+extension MainViewController {
+    func searchResults() {
         if searchBar.text == "" {
-            NetworkManager.shared.requestTrending(segmentTitle: selectedSegmentTitle) { moviesList in
-                self.moviesList = moviesList
+            NetworkManager.shared.requestTrending(segmentTitle: selectedSegmentTitle) { resultsList in
+                self.resultsList = resultsList
                 self.collectionView.reloadData()
             }
         }
         if searchBar.text != "" {
-            NetworkManager.shared.requestMovies(searchBar.text!, segmentTitle: selectedSegmentTitle) { moviesList in
-                self.moviesList = moviesList
+            NetworkManager.shared.requestMovies(searchBar.text!, segmentTitle: selectedSegmentTitle) { resultsList in
+                self.resultsList = resultsList
                 self.collectionView.reloadData()
             }
         }

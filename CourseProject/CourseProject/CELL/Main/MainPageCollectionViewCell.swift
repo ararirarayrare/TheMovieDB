@@ -1,7 +1,7 @@
 import UIKit
 import SDWebImage
 
-class MovieCollectionViewCell: UICollectionViewCell {
+class MainPageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
@@ -9,11 +9,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
-    func configure(with movie: Movie) {
-        if let titleText = movie.original_title ?? movie.original_name ?? movie.title {
+    func configure(with result: Result) {
+        if let titleText = result.originalTitle ?? result.originalName ?? result.title {
             titleLabel.text = titleText
         }
-        if let posterPath = movie.poster_path {
+        if let posterPath = result.posterPath {
             let urlString = "https://image.tmdb.org/t/p/w500/" + posterPath
             let url = URL(string: urlString)
             posterImageView.sd_setImage(with: url, completed: nil)

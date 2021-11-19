@@ -20,7 +20,6 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var taglineLabel: UILabel!
     
     var movie: JSONMovieDetails?
-    var productionCompaniesList: [MovieProductionCompanies] = []
     var videosList: [VideoResults]?
     
     override func viewDidLoad() {

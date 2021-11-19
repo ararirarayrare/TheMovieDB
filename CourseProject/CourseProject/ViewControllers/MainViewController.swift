@@ -79,7 +79,10 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         if selectedSegmentTitle == "tv" {
             if let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController {
-                navigationController?.pushViewController(tvDetailsViewController, animated: true)
+                NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
+                    tvDetailsViewController.tv = tv
+                    self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
+                }
             }
         }
         collectionView.deselectItem(at: indexPath, animated: true)

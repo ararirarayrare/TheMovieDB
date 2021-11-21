@@ -1,5 +1,4 @@
 import UIKit
-import SDWebImage
 
 class MainPageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
@@ -14,9 +13,7 @@ class MainPageCollectionViewCell: UICollectionViewCell {
             titleLabel.text = titleText
         }
         if let posterPath = result.posterPath {
-            let urlString = "https://image.tmdb.org/t/p/w500/" + posterPath
-            let url = URL(string: urlString)
-            posterImageView.sd_setImage(with: url, completed: nil)
+            NetworkManager.shared.setImageFor(imageView: posterImageView, path: posterPath)
             posterImageView.layer.cornerRadius = 15
         }
     }

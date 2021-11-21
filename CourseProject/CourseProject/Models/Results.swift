@@ -1,4 +1,5 @@
 import Foundation
+
 struct Result : Codable {
     let genreIds : [Int]?
     let id : Int?

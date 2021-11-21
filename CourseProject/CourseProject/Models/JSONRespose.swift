@@ -1,4 +1,5 @@
 import Foundation
+
 struct JSONResponse : Codable {
     let results : [Result]?
     

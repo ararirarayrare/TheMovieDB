@@ -1,7 +1,7 @@
 import UIKit
-import SDWebImage
 import youtube_ios_player_helper
 import SafariServices
+import RealmSwift
 
 class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var backdropPathImageView: UIImageView!
@@ -21,6 +21,8 @@ class MovieDetailsViewController: UIViewController {
     
     var movie: JSONMovieDetails?
     var videosList: [VideoResults]?
+    let realm = try! Realm()
+    var watchLaterData = WatchLater()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,12 @@ class MovieDetailsViewController: UIViewController {
         self.posterPathImageView.clipsToBounds = true
         self.posterPathImageView.layer.cornerRadius = 12
     }
+    @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
+        try! realm.write({
+            realm.add(watchLaterData)
+        })
+    }
+    
     
     @objc func clickLabel() {
         if let stringURL = movie?.homepage {
@@ -48,18 +56,20 @@ class MovieDetailsViewController: UIViewController {
 
 extension MovieDetailsViewController {
     func setupMovieDetailsPage() {
+        if let id = movie?.id {
+            self.watchLaterData.id = id
+            self.watchLaterData.numberOfSeasons = 0
+        }
         if let backdropPath = movie?.backdropPath {
-            let stringURL = "https://image.tmdb.org/t/p/w500\(backdropPath)"
-            let url = URL(string: stringURL)
-            self.backdropPathImageView.sd_setImage(with: url, completed: nil)
+            NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
         }
         if let posterPath = movie?.posterPath {
-            let stringURL = "https://image.tmdb.org/t/p/w500\(posterPath)"
-            let url = URL(string: stringURL)
-            self.posterPathImageView.sd_setImage(with: url, completed: nil)
+            NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
+            self.watchLaterData.posterPath = posterPath
         }
-        if let titleLabelText = movie?.originalTitle ?? movie?.title {
-            self.titleLabel.text = titleLabelText
+        if let titleText = movie?.originalTitle ?? movie?.title {
+            self.titleLabel.text = titleText
+            self.watchLaterData.title = titleText
         }
         if let voteAverage = movie?.voteAverage {
             if let voteCount = movie?.voteCount {
@@ -83,6 +93,7 @@ extension MovieDetailsViewController {
         }
         if let releaseDateText = movie?.releaseDate {
             self.releaseDateLabel.text = releaseDateText
+            self.watchLaterData.releaseDate = releaseDateText
         }
         if let budgetText = movie?.budget {
             self.budgetLabel.text = "\(budgetText) USD"

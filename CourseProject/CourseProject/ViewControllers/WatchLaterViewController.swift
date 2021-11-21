@@ -1,0 +1,110 @@
+import UIKit
+import RealmSwift
+
+class WatchLaterViewController: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var deleteAllButton: UIButton!
+    
+    
+    lazy var realm: Realm = {
+        return try! Realm()
+    }()
+    var data: Results<WatchLater>!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let cellName = String(describing: WatchLaterTableViewCell.self)
+        let cellNib = UINib(nibName: cellName, bundle: nil)
+        self.tableView.register(cellNib, forCellReuseIdentifier: cellName)
+        setupNavigationBar()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        data = realm.objects(WatchLater.self)
+        tableView.reloadData()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.deleteAllButton.layer.cornerRadius = 12
+    }
+    
+    @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
+        try! realm.write({
+            realm.delete(data)
+        })
+        self.tableView.reloadData()
+    }
+}
+
+extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if data.count != 0 {
+            return self.data.count
+        }
+        return 0
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WatchLaterTableViewCell") as? WatchLaterTableViewCell
+        let item = data[indexPath.row]
+        cell?.configure(with: item)
+        
+        return cell!
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 130.0
+    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let remove = UIContextualAction(style: .destructive, title: "Remove") { action, view, completionHandler in
+            let editingRow = self.data[indexPath.row]
+            try! self.realm.write({
+                self.realm.delete(editingRow)
+            })
+            self.tableView.reloadData()
+            completionHandler(true)
+        }
+        let swipe = UISwipeActionsConfiguration(actions: [remove])
+        return swipe
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let row = data[indexPath.row]
+        let searchId = row.id
+        if row.numberOfSeasons == 0 {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
+                NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
+                    movieDetailsViewController.movie = movie
+                    NetworkManager.shared.requestVideoDetails(searchId) { videoList in
+                        movieDetailsViewController.videosList = videoList
+                        self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+                    }
+                }
+            }
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController {
+                NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
+                    tvDetailsViewController.tv = tv
+                    self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
+                }
+            }
+        }
+        
+    }
+}
+
+// MARK: - My functions
+
+extension WatchLaterViewController {
+    func setupNavigationBar() {
+        let label = UILabel()
+        label.text = "Watch later list"
+        label.font = UIFont(name: "Arial Rounded MT Bold", size: 24)
+        label.textAlignment = .center
+        label.textColor = .white
+        navigationItem.titleView = label
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.tintColor = .white
+    }
+}

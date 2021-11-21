@@ -65,25 +65,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.endEditing(true)
         guard let searchId = resultsList[indexPath.item].id else { return }
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if selectedSegmentTitle == "movie" {
-            if let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
-                NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
-                    movieDetailsViewController.movie = movie
-                    NetworkManager.shared.requestVideoDetails(searchId) { videoList in
-                        movieDetailsViewController.videosList = videoList
-                        self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
-                    }
-                }
-            }
+            pushMovieDetailsVC(searchId: searchId)
         }
         if selectedSegmentTitle == "tv" {
-            if let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController {
-                NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
-                    tvDetailsViewController.tv = tv
-                    self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
-                }
-            }
+            pushTvDetailsVC(searchId: searchId)
         }
         collectionView.deselectItem(at: indexPath, animated: true)
     }
@@ -117,4 +103,27 @@ extension MainViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .white
     }
+    
+    func pushMovieDetailsVC(searchId: Int) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
+            NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
+                movieDetailsViewController.movie = movie
+                NetworkManager.shared.requestVideoDetails(searchId) { videoList in
+                    movieDetailsViewController.videosList = videoList
+                    self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+                }
+            }
+        }
+    }
+    func pushTvDetailsVC(searchId: Int) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController {
+            NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
+                tvDetailsViewController.tv = tv
+                self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
+            }
+        }
+    }
 }
+

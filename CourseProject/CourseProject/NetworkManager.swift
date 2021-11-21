@@ -1,5 +1,6 @@
 import Foundation
 import Alamofire
+import SDWebImage
 
 struct NetworkManager {
     static let shared = NetworkManager()
@@ -54,5 +55,15 @@ struct NetworkManager {
                 }
             }
         }
+    }
+}
+
+// MARK: - SDWebImage function.
+
+extension NetworkManager {
+    func setImageFor(imageView: UIImageView, path: String) {
+        let stringURL = "https://image.tmdb.org/t/p/w500" + path
+        let url = URL(string: stringURL)
+        imageView.sd_setImage(with: url, completed: nil)
     }
 }

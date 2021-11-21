@@ -1,5 +1,5 @@
 import UIKit
-import SDWebImage
+import RealmSwift
 import SafariServices
 
 class TvDetailsViewController: UIViewController {
@@ -20,7 +20,9 @@ class TvDetailsViewController: UIViewController {
     @IBOutlet weak var watchLaterButton: UIButton!
     @IBOutlet weak var taglineLabel: UILabel!
     
+    let realm = try! Realm()
     var tv: JSONTvDetails?
+    var watchLaterData = WatchLater()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,12 @@ class TvDetailsViewController: UIViewController {
         self.autorImageView.layer.cornerRadius = 10
     }
     
+    @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
+        try! realm.write({
+            realm.add(watchLaterData)
+        })
+    }
+    
     @objc func clickLabel() {
         if let stringURL = tv?.homepage {
             if let url = URL(string: stringURL) {
@@ -52,18 +60,19 @@ class TvDetailsViewController: UIViewController {
 
 extension TvDetailsViewController {
     func setupTvDetailsPage() {
+        if let id = tv?.id {
+            self.watchLaterData.id = id
+        }
         if let backdropPath = tv?.backdropPath {
-            let stringURL = "https://image.tmdb.org/t/p/w500" + backdropPath
-            let url = URL(string: stringURL)
-            self.backdropPathImageView.sd_setImage(with: url, completed: nil)
+            NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
         }
         if let posterPath = tv?.posterPath {
-            let stringURL = "https://image.tmdb.org/t/p/w500" + posterPath
-            let url = URL(string: stringURL)
-            self.posterPathImageView.sd_setImage(with: url, completed: nil)
+            NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
+            self.watchLaterData.posterPath = posterPath
         }
         if let titleText = tv?.originalName ?? tv?.name {
             self.titleLabel.text = titleText
+            self.watchLaterData.title = titleText
         }
         if let voteAverage = tv?.voteAverage {
             if let voteCount = tv?.voteCount {
@@ -87,12 +96,14 @@ extension TvDetailsViewController {
         }
         if let firstReleaseText = tv?.firstAirDate {
             self.firstReleaseDateLabel.text = firstReleaseText
+            self.watchLaterData.releaseDate = firstReleaseText
         }
         if let lastReleaseText = tv?.lastAirDate {
             self.lastReleaseDateLabel.text = lastReleaseText
         }
         var seasonesEpisodesRuntimeText = ""
         if let seasonesCount = tv?.numberOfSeasons {
+            self.watchLaterData.numberOfSeasons = seasonesCount
             if seasonesCount == 1 {
                 seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
             } else {
@@ -120,9 +131,7 @@ extension TvDetailsViewController {
             self.autorNameLabel.text = autorNameText
         }
         if let profilePath = tv?.createdBy?.first?.profilePath {
-            let stringURL = "https://image.tmdb.org/t/p/w500" + profilePath
-            let url = URL(string: stringURL)
-            self.autorImageView.sd_setImage(with: url, completed: nil)
+            NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
         }
         if let taglineText = tv?.tagline {
             self.taglineLabel.text = taglineText

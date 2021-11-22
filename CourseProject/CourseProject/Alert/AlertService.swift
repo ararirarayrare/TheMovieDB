@@ -1,9 +1,16 @@
 import UIKit
 
 class AlertService {
-    func alert() -> AlertViewController {
+    func alert(text: String) -> AlertViewController {
         let storyboard = UIStoryboard(name: "Alert", bundle: .main)
         let alertViewController = storyboard.instantiateViewController(withIdentifier: "AlertViewController") as! AlertViewController
+        alertViewController.text = text
         return alertViewController
+    }
+    func deleteAlert(completion: @escaping () -> Void) -> DeleteAlertViewController {
+        let storyboard = UIStoryboard(name: "Alert", bundle: .main)
+        let deleteAlertViewController = storyboard.instantiateViewController(withIdentifier: "DeleteAlertViewController") as! DeleteAlertViewController
+        deleteAlertViewController.deleteAction = completion
+        return deleteAlertViewController
     }
 }

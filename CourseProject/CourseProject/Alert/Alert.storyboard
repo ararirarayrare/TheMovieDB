@@ -37,19 +37,93 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.34999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="MxJ-yG-ccy" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="Iwh-VE-tYX"/>
                             <constraint firstItem="MxJ-yG-ccy" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="LPB-d4-91R"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="alertTextLabel" destination="HBg-hN-WB9" id="nC0-Qh-cPF"/>
                         <outlet property="containerView" destination="MxJ-yG-ccy" id="NOZ-ih-A8K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="129" y="82"/>
+        </scene>
+        <!--Delete Alert View Controller-->
+        <scene sceneID="Tii-cC-SQW">
+            <objects>
+                <viewController storyboardIdentifier="DeleteAlertViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="4wq-Qd-WWD" customClass="DeleteAlertViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qQC-4o-yhb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9v-VC-1Zn">
+                                <rect key="frame" x="82" y="396" width="250" height="104"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You sure you want to delete all?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ibw-HL-dKT">
+                                        <rect key="frame" x="24" y="8" width="202" height="41"/>
+                                        <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="nQ1-hb-Gm0">
+                                        <rect key="frame" x="8" y="65" width="234" height="31"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nq-AA-Ddr">
+                                                <rect key="frame" x="0.0" y="0.0" width="109" height="31"/>
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Cancel"/>
+                                                <connections>
+                                                    <action selector="cancelButton:" destination="4wq-Qd-WWD" eventType="touchUpInside" id="Y8I-RI-NYF"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kyh-Ve-uZi">
+                                                <rect key="frame" x="125" y="0.0" width="109" height="31"/>
+                                                <color key="backgroundColor" red="0.513375947" green="0.15507443360000001" blue="0.086753656629999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Delete"/>
+                                                <connections>
+                                                    <action selector="deleteAllButton:" destination="4wq-Qd-WWD" eventType="touchUpInside" id="OQI-P4-oij"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="nQ1-hb-Gm0" firstAttribute="top" secondItem="Ibw-HL-dKT" secondAttribute="bottom" constant="16" id="4eX-Vy-06N"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ibw-HL-dKT" secondAttribute="trailing" constant="24" id="7lP-Lw-wLg"/>
+                                    <constraint firstItem="Ibw-HL-dKT" firstAttribute="top" secondItem="O9v-VC-1Zn" secondAttribute="top" constant="8" id="9cC-FD-xJ9"/>
+                                    <constraint firstAttribute="bottom" secondItem="nQ1-hb-Gm0" secondAttribute="bottom" constant="8" id="GbA-CF-Kg8"/>
+                                    <constraint firstAttribute="trailing" secondItem="nQ1-hb-Gm0" secondAttribute="trailing" constant="8" id="Ja2-RC-B62"/>
+                                    <constraint firstAttribute="width" constant="250" id="NRr-av-Flt"/>
+                                    <constraint firstItem="Ibw-HL-dKT" firstAttribute="leading" secondItem="O9v-VC-1Zn" secondAttribute="leading" constant="24" id="hgO-Eu-sb2"/>
+                                    <constraint firstItem="nQ1-hb-Gm0" firstAttribute="leading" secondItem="O9v-VC-1Zn" secondAttribute="leading" constant="8" id="waL-33-hIE"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2W1-8b-nRj"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.34999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="O9v-VC-1Zn" firstAttribute="centerY" secondItem="qQC-4o-yhb" secondAttribute="centerY" id="Gy8-Lh-kdo"/>
+                            <constraint firstItem="O9v-VC-1Zn" firstAttribute="centerX" secondItem="qQC-4o-yhb" secondAttribute="centerX" id="cin-WN-Rl7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="0nq-AA-Ddr" id="y3k-YU-2UO"/>
+                        <outlet property="containerView" destination="O9v-VC-1Zn" id="cYz-tR-zQp"/>
+                        <outlet property="deleteButton" destination="kyh-Ve-uZi" id="pQa-Qv-mq1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jVm-PE-R4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="918.84057971014499" y="81.696428571428569"/>
         </scene>
     </scenes>
 </document>

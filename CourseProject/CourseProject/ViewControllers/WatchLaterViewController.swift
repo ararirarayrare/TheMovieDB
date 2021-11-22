@@ -11,6 +11,8 @@ class WatchLaterViewController: UIViewController {
         return try! Realm()
     }()
     private var data: Results<WatchLater>!
+    let alertService = AlertService()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +32,24 @@ class WatchLaterViewController: UIViewController {
     }
     
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
-        try! realm.write({
-            realm.delete(data)
-        })
-        self.tableView.reloadData()
+        if self.data.count > 0 {
+        let alert = alertService.deleteAlert { [weak self] in
+            if self?.data != nil {
+                try! self?.realm.write({
+                    self?.realm.delete(self!.data!)
+                })
+                self?.tableView.reloadData()
+            }
+        }
+        present(alert, animated: true, completion: nil)
+        } else {
+            let alert = alertService.alert(text: "Your list is clear!\nNothing to delete")
+            let when = DispatchTime.now() + 1
+            present(alert, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: when) {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }
 

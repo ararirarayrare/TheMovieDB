@@ -22,6 +22,7 @@
 		00CB44B5274A881A00D386A0 /* WatchLaterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CB44B3274A881A00D386A0 /* WatchLaterTableViewCell.swift */; };
 		00CB44B6274A881A00D386A0 /* WatchLaterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00CB44B4274A881A00D386A0 /* WatchLaterTableViewCell.xib */; };
 		00CB44B8274A8B2100D386A0 /* WatchLater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CB44B7274A8B2100D386A0 /* WatchLater.swift */; };
+		00CD53F7274BEF8F009F1BE5 /* DeleteAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD53F6274BEF8F009F1BE5 /* DeleteAlertViewController.swift */; };
 		00CEFA44273BEF9E00421608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CEFA43273BEF9E00421608 /* AppDelegate.swift */; };
 		00CEFA46273BEF9E00421608 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CEFA45273BEF9E00421608 /* SceneDelegate.swift */; };
 		00CEFA48273BEF9E00421608 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CEFA47273BEF9E00421608 /* MainViewController.swift */; };
@@ -56,6 +57,7 @@
 		00CB44B3274A881A00D386A0 /* WatchLaterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLaterTableViewCell.swift; sourceTree = "<group>"; };
 		00CB44B4274A881A00D386A0 /* WatchLaterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WatchLaterTableViewCell.xib; sourceTree = "<group>"; };
 		00CB44B7274A8B2100D386A0 /* WatchLater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLater.swift; sourceTree = "<group>"; };
+		00CD53F6274BEF8F009F1BE5 /* DeleteAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertViewController.swift; sourceTree = "<group>"; };
 		00CEFA40273BEF9E00421608 /* CourseProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CourseProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CEFA43273BEF9E00421608 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00CEFA45273BEF9E00421608 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				0073F203274BAB1400D4E795 /* AlertViewController.swift */,
+				00CD53F6274BEF8F009F1BE5 /* DeleteAlertViewController.swift */,
 				0073F209274BACF500D4E795 /* AlertService.swift */,
 				0073F207274BAB5800D4E795 /* Alert.storyboard */,
 			);
@@ -366,6 +369,7 @@
 				0088217527454526000C4478 /* MovieDetailsViewController.swift in Sources */,
 				00CEFA48273BEF9E00421608 /* MainViewController.swift in Sources */,
 				00F391952748461D00601420 /* TvSeasoneCollectionViewCell.swift in Sources */,
+				00CD53F7274BEF8F009F1BE5 /* DeleteAlertViewController.swift in Sources */,
 				00F3918E27482E6300601420 /* JSONTvDetails.swift in Sources */,
 				00CEFA44273BEF9E00421608 /* AppDelegate.swift in Sources */,
 				0073F205274BAB1400D4E795 /* AlertViewController.swift in Sources */,

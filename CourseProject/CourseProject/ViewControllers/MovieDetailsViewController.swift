@@ -38,7 +38,7 @@ class MovieDetailsViewController: UIViewController {
         self.posterPathImageView.layer.cornerRadius = 12
     }
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
-        let alert = alertService.alert()
+        let alert = alertService.alert(text: "Saved to watch list!")
         let when = DispatchTime.now() + 1
         try! realm.write({
             realm.add(watchLaterData)

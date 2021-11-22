@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Alert View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="AlertViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="Y6W-OH-hqX" customClass="AlertViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MxJ-yG-ccy">
+                                <rect key="frame" x="82" y="423" width="250" height="50.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved to watch list!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBg-hN-WB9">
+                                        <rect key="frame" x="24" y="16" width="202" height="18.5"/>
+                                        <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="HBg-hN-WB9" firstAttribute="top" secondItem="MxJ-yG-ccy" secondAttribute="top" constant="16" id="Zoh-pD-VYN"/>
+                                    <constraint firstAttribute="trailing" secondItem="HBg-hN-WB9" secondAttribute="trailing" constant="24" id="eRR-bP-Vl6"/>
+                                    <constraint firstItem="HBg-hN-WB9" firstAttribute="leading" secondItem="MxJ-yG-ccy" secondAttribute="leading" constant="24" id="kL4-DI-gGu"/>
+                                    <constraint firstAttribute="width" constant="250" id="wXU-dl-QtC"/>
+                                    <constraint firstAttribute="bottom" secondItem="HBg-hN-WB9" secondAttribute="bottom" constant="16" id="yPO-SO-nPk"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="MxJ-yG-ccy" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="Iwh-VE-tYX"/>
+                            <constraint firstItem="MxJ-yG-ccy" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="LPB-d4-91R"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="MxJ-yG-ccy" id="NOZ-ih-A8K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="129" y="82"/>
+        </scene>
+    </scenes>
+</document>

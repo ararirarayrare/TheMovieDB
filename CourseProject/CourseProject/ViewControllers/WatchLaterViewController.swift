@@ -54,17 +54,20 @@ extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130.0
     }
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let remove = UIContextualAction(style: .destructive, title: "Remove") { action, view, completionHandler in
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
             let editingRow = self.data[indexPath.row]
             try! self.realm.write({
                 self.realm.delete(editingRow)
             })
-            self.tableView.reloadData()
-            completionHandler(true)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
         }
-        let swipe = UISwipeActionsConfiguration(actions: [remove])
-        return swipe
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = data[indexPath.row]
@@ -89,7 +92,6 @@ extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
-        
     }
 }
 

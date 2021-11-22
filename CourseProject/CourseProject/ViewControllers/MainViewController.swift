@@ -66,12 +66,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         self.view.endEditing(true)
         guard let searchId = resultsList[indexPath.item].id else { return }
         if selectedSegmentTitle == "movie" {
-            pushMovieDetailsVC(searchId: searchId)
+            pushMovieDetailsViewController(searchId: searchId)
         }
         if selectedSegmentTitle == "tv" {
-            pushTvDetailsVC(searchId: searchId)
+            pushTvDetailsViewController(searchId: searchId)
         }
-        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 
@@ -103,8 +102,7 @@ extension MainViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .white
     }
-    
-    func pushMovieDetailsVC(searchId: Int) {
+    func pushMovieDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
             NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
@@ -116,7 +114,7 @@ extension MainViewController {
             }
         }
     }
-    func pushTvDetailsVC(searchId: Int) {
+    func pushTvDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController {
             NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in

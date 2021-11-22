@@ -23,6 +23,7 @@ class MovieDetailsViewController: UIViewController {
     var videosList: [VideoResults]?
     let realm = try! Realm()
     var watchLaterData = WatchLater()
+    let alertService = AlertService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +37,16 @@ class MovieDetailsViewController: UIViewController {
         self.posterPathImageView.layer.cornerRadius = 12
     }
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
+        let alert = alertService.alert()
+        let when = DispatchTime.now() + 1
         try! realm.write({
             realm.add(watchLaterData)
         })
+        present(alert, animated: true, completion: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            alert.dismiss(animated: true, completion: nil)
+        }
     }
     
     
@@ -116,3 +124,4 @@ extension MovieDetailsViewController {
         }
     }
 }
+

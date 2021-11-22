@@ -10,7 +10,7 @@ class WatchLaterViewController: UIViewController {
     lazy var realm: Realm = {
         return try! Realm()
     }()
-    var data: Results<WatchLater>!
+    private var data: Results<WatchLater>!
     
     override func viewDidLoad() {
         super.viewDidLoad()

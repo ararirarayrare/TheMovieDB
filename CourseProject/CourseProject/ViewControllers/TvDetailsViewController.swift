@@ -20,10 +20,10 @@ class TvDetailsViewController: UIViewController {
     @IBOutlet weak var watchLaterButton: UIButton!
     @IBOutlet weak var taglineLabel: UILabel!
     
-    let realm = try! Realm()
+    private let realm = try! Realm()
     var tv: JSONTvDetails?
-    var watchLaterData = WatchLater()
-    let alertService = AlertService()
+    private var watchLaterData = WatchLater()
+    private let alertService = AlertService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ class TvDetailsViewController: UIViewController {
 // MARK: - My functions.
 
 extension TvDetailsViewController {
-    func setupTvDetailsPage() {
+    private func setupTvDetailsPage() {
         if let id = tv?.id {
             self.watchLaterData.id = id
         }

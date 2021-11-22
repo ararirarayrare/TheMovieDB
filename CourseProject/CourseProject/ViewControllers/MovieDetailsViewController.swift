@@ -8,22 +8,23 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var posterPathImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsLabel: UILabel!
-    @IBOutlet weak var runtimeLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var runtimeLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
     @IBOutlet weak var revenueLabel: UILabel!
     @IBOutlet var trailerPlayerView: YTPlayerView!
     @IBOutlet weak var watchLaterButton: UIButton!
     @IBOutlet weak var websiteLabel: UILabel!
     @IBOutlet weak var taglineLabel: UILabel!
-    
+
     var movie: JSONMovieDetails?
     var videosList: [VideoResults]?
-    let realm = try! Realm()
-    var watchLaterData = WatchLater()
-    let alertService = AlertService()
+    private let realm = try! Realm()
+    private var watchLaterData = WatchLater()
+    private let alertService = AlertService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,7 @@ class MovieDetailsViewController: UIViewController {
         try! realm.write({
             realm.add(watchLaterData)
         })
+        realm.autorefresh = true
         present(alert, animated: true, completion: nil)
         
         DispatchQueue.main.asyncAfter(deadline: when) {
@@ -63,7 +65,7 @@ class MovieDetailsViewController: UIViewController {
 // MARK: - My functions.
 
 extension MovieDetailsViewController {
-    func setupMovieDetailsPage() {
+    private func setupMovieDetailsPage() {
         if let id = movie?.id {
             self.watchLaterData.id = id
             self.watchLaterData.numberOfSeasons = 0
@@ -84,8 +86,8 @@ extension MovieDetailsViewController {
                 self.ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
             }
         }
-        if let runtimeText = movie?.runtime {
-            self.runtimeLabel.text = "Run time: \(runtimeText) minutes."
+        if let statusText = movie?.status {
+            self.statusLabel.text = "Status: \(statusText)."
         }
         if let arrayOfGenres = movie?.genres {
             var genresText = ""
@@ -102,6 +104,9 @@ extension MovieDetailsViewController {
         if let releaseDateText = movie?.releaseDate {
             self.releaseDateLabel.text = releaseDateText
             self.watchLaterData.releaseDate = releaseDateText
+        }
+        if let runtimeText = movie?.runtime {
+            self.runtimeLabel.text = "Run time: \(runtimeText) minutes."
         }
         if let budgetText = movie?.budget {
             self.budgetLabel.text = "\(budgetText) USD"

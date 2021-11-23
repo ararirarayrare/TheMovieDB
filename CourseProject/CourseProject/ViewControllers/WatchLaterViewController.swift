@@ -1,18 +1,12 @@
 import UIKit
-import RealmSwift
 
 class WatchLaterViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deleteAllButton: UIButton!
     
-    
-    lazy var realm: Realm = {
-        return try! Realm()
-    }()
-    private var data: Results<WatchLater>!
     let alertService = AlertService()
-    
+    private var data = [WatchLater]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +17,7 @@ class WatchLaterViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        data = realm.objects(WatchLater.self)
+        data = DataManager.shared.get()
         tableView.reloadData()
     }
     override func viewDidLayoutSubviews() {
@@ -33,13 +27,10 @@ class WatchLaterViewController: UIViewController {
     
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
         if self.data.count > 0 {
-        let alert = alertService.deleteAlert { [weak self] in
-            if self?.data != nil {
-                try! self?.realm.write({
-                    self?.realm.delete(self!.data!)
-                })
-                self?.tableView.reloadData()
-            }
+        let alert = alertService.deleteAlert {
+            self.data.removeAll()
+            DataManager.shared.deleteAll()
+            self.tableView.reloadData()
         }
         present(alert, animated: true, completion: nil)
         } else {
@@ -78,9 +69,8 @@ extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             tableView.beginUpdates()
             let editingRow = self.data[indexPath.row]
-            try! self.realm.write({
-                self.realm.delete(editingRow)
-            })
+            self.data.remove(at: indexPath.row)
+            DataManager.shared.removeSelected(object: editingRow)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
         }

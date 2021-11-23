@@ -1,5 +1,4 @@
 import UIKit
-import RealmSwift
 import SafariServices
 
 class TvDetailsViewController: UIViewController {
@@ -20,7 +19,6 @@ class TvDetailsViewController: UIViewController {
     @IBOutlet weak var watchLaterButton: UIButton!
     @IBOutlet weak var taglineLabel: UILabel!
     
-    private let realm = try! Realm()
     var tv: JSONTvDetails?
     private var watchLaterData = WatchLater()
     private let alertService = AlertService()
@@ -44,11 +42,8 @@ class TvDetailsViewController: UIViewController {
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
         let alert = alertService.alert(text: "Saved to watch list!")
         let when = DispatchTime.now() + 1
-        try! realm.write({
-            realm.add(watchLaterData)
-        })
+        DataManager.shared.save(object: watchLaterData)
         present(alert, animated: true, completion: nil)
-        
         DispatchQueue.main.asyncAfter(deadline: when) {
             alert.dismiss(animated: true, completion: nil)
         }

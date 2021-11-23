@@ -7,4 +7,8 @@ class WatchLater: Object {
     @objc dynamic var posterPath: String = ""
     @objc dynamic var title: String = ""
     @objc dynamic var releaseDate: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }

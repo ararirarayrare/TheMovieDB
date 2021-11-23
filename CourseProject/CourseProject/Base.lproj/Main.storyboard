@@ -23,7 +23,7 @@
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vZs-kN-nZ5">
                                         <rect key="frame" x="0.0" y="79" width="414" height="678"/>
                                         <color key="backgroundColor" red="0.18823529780000001" green="0.18823529780000001" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="4" id="4Y8-4U-Eds">
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="4Y8-4U-Eds">
                                             <size key="itemSize" width="128" height="128"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -65,12 +65,17 @@
                                     <action selector="segmentSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="xiT-qI-PxP"/>
                                 </connections>
                             </segmentedControl>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="rrJ-FF-6RQ">
+                                <rect key="frame" x="346" y="103.5" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.18864900509999999" green="0.1884072487" blue="0.19263013170000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="mzN-8T-pUB" firstAttribute="top" secondItem="dRH-PU-gyX" secondAttribute="bottom" constant="24" id="9nw-OV-nKx"/>
                             <constraint firstItem="dRH-PU-gyX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DaY-XE-P3L"/>
+                            <constraint firstItem="rrJ-FF-6RQ" firstAttribute="centerY" secondItem="dRH-PU-gyX" secondAttribute="centerY" id="NXy-hk-GAS"/>
                             <constraint firstItem="dRH-PU-gyX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Xbh-ai-SvW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mzN-8T-pUB" secondAttribute="trailing" constant="32" id="bS1-HP-prO"/>
                             <constraint firstAttribute="bottom" secondItem="sZa-3Y-9Iw" secondAttribute="bottom" id="cwr-5G-F7b"/>
@@ -80,12 +85,14 @@
                             <constraint firstItem="sZa-3Y-9Iw" firstAttribute="top" secondItem="dRH-PU-gyX" secondAttribute="bottom" id="rfK-rU-m8n"/>
                             <constraint firstItem="vZs-kN-nZ5" firstAttribute="top" secondItem="mzN-8T-pUB" secondAttribute="bottom" constant="24" id="uVi-dJ-1wB"/>
                             <constraint firstItem="sZa-3Y-9Iw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xvX-VW-soa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rrJ-FF-6RQ" secondAttribute="trailing" constant="48" id="xwl-e2-BFA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="ssX-HA-awc">
                         <barButtonItem key="backBarButtonItem" title="The Movie Data Base" id="1ls-r8-XJ5"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="rrJ-FF-6RQ" id="Ees-3i-RIz"/>
                         <outlet property="collectionView" destination="vZs-kN-nZ5" id="FNC-rQ-BTH"/>
                         <outlet property="mainNavigationItem" destination="ssX-HA-awc" id="x6q-8r-uho"/>
                         <outlet property="searchBar" destination="dRH-PU-gyX" id="Zub-n5-3wx"/>

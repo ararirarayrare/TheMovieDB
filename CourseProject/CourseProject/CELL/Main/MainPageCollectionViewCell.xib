@@ -25,33 +25,39 @@
                     </imageView>
                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ueK-oN-T0o">
                         <rect key="frame" x="0.0" y="141.5" width="100" height="16.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBr-EB-Ke4">
+                                <rect key="frame" x="6" y="0.0" width="88" height="16.5"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="yBr-EB-Ke4" secondAttribute="trailing" constant="6" id="4ZL-Hc-Q5e"/>
+                            <constraint firstAttribute="bottom" secondItem="yBr-EB-Ke4" secondAttribute="bottom" id="jJk-jJ-Q7d"/>
+                            <constraint firstItem="yBr-EB-Ke4" firstAttribute="top" secondItem="ueK-oN-T0o" secondAttribute="top" id="lLC-tL-0P1"/>
+                            <constraint firstItem="yBr-EB-Ke4" firstAttribute="leading" secondItem="ueK-oN-T0o" secondAttribute="leading" constant="6" id="x7G-UD-C3B"/>
+                        </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBr-EB-Ke4">
-                        <rect key="frame" x="0.0" y="141.5" width="100" height="16.5"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="ueK-oN-T0o" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="1d0-v0-lio"/>
-                <constraint firstAttribute="trailing" secondItem="yBr-EB-Ke4" secondAttribute="trailing" id="2kH-Ie-Kfm"/>
                 <constraint firstItem="e0K-Up-RUh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="5Nw-B3-nSU"/>
-                <constraint firstItem="yBr-EB-Ke4" firstAttribute="height" secondItem="ueK-oN-T0o" secondAttribute="height" id="KtC-S3-YCt"/>
+                <constraint firstItem="ueK-oN-T0o" firstAttribute="height" secondItem="e0K-Up-RUh" secondAttribute="height" multiplier="0.11" id="GNL-Z5-AHR"/>
                 <constraint firstAttribute="trailing" secondItem="ueK-oN-T0o" secondAttribute="trailing" id="dwb-tI-bPP"/>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="yBr-EB-Ke4" secondAttribute="bottom" id="ikf-pG-f8S"/>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="ueK-oN-T0o" secondAttribute="bottom" id="o3M-Pg-Jab"/>
-                <constraint firstItem="yBr-EB-Ke4" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="r6x-KO-H9H"/>
                 <constraint firstAttribute="trailing" secondItem="e0K-Up-RUh" secondAttribute="trailing" id="sRH-mp-flc"/>
                 <constraint firstItem="e0K-Up-RUh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="x5J-zg-NIu"/>
             </constraints>
             <size key="customSize" width="285" height="347"/>
             <connections>
                 <outlet property="posterImageView" destination="e0K-Up-RUh" id="zpq-LT-jlN"/>
+                <outlet property="titleBackgroundView" destination="ueK-oN-T0o" id="wZd-Bx-qjC"/>
                 <outlet property="titleLabel" destination="yBr-EB-Ke4" id="UQ4-zA-D4N"/>
             </connections>
             <point key="canvasLocation" x="13.043478260869566" y="196.875"/>

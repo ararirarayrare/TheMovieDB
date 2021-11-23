@@ -90,12 +90,12 @@ extension MovieDetailsViewController {
         guard let overviewText = movie?.overview else { return }
         if overviewText == "" {
             overviewLabel.text = "The server didn't send us the overview :(\n\nBut we think this film is good!"
-        }
+        } else {
         overviewLabel.text = overviewText
-            
+        }
         guard let releaseDateText = movie?.releaseDate else { return }
         if releaseDateText == "" {
-            releaseDateLabel.text = "Do you care when it was released? :D\nHonestly the server didn't send us the release date :("
+            releaseDateLabel.text = "the server didn't send us the release date"
         } else {
         releaseDateLabel.text = releaseDateText
         watchLaterData.releaseDate = releaseDateText
@@ -131,11 +131,7 @@ extension MovieDetailsViewController {
         trailerPlayerView.load(withVideoId: videoId)
         
         guard let taglineText = movie?.tagline else { return }
-        if taglineText == "" {
-            taglineLabel.isHidden = true
-        } else {
         taglineLabel.text = taglineText
-        }
     }
 
 

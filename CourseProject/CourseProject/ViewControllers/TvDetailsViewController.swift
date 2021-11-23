@@ -63,83 +63,175 @@ class TvDetailsViewController: UIViewController {
 
 extension TvDetailsViewController {
     private func setupTvDetailsPage() {
-        if let id = tv?.id {
-            self.watchLaterData.id = id
-        }
-        if let backdropPath = tv?.backdropPath {
-            NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
-        }
-        if let posterPath = tv?.posterPath {
-            NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
-            self.watchLaterData.posterPath = posterPath
-        }
-        if let titleText = tv?.originalName ?? tv?.name {
-            self.titleLabel.text = titleText
-            self.watchLaterData.title = titleText
-        }
-        if let voteAverage = tv?.voteAverage {
-            if let voteCount = tv?.voteCount {
-                self.ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
+        guard let id = tv?.id else { return }
+         watchLaterData.id = id
+        
+        guard let backdropPath = tv?.backdropPath else { return }
+        NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
+        
+        guard let posterPath = tv?.posterPath else { return }
+        NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
+         watchLaterData.posterPath = posterPath
+        
+        guard let titleText = tv?.originalName ?? tv?.name else { return }
+        titleLabel.text = titleText
+        watchLaterData.title = titleText
+        
+        guard let voteAverage = tv?.voteAverage else { return }
+        guard let voteCount = tv?.voteCount else { return }
+        ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
+            
+        
+        guard let statusText = tv?.status else { return }
+        statusLabel.text = "Status: \(statusText).˚"
+        
+        guard let arrayOfGenres = tv?.genres else { return }
+        var genresText = ""
+        for item in arrayOfGenres {
+            if let genre = item.name {
+                genresText += "\(genre) "
             }
         }
-        if let statusText = tv?.status {
-            self.statusLabel.text = "Status: \(statusText).˚"
+        genresLabel.text = genresText
+        
+        guard let overviewText = tv?.overview else { return }
+        if overviewText == "" {
+            overviewLabel.text = "The server didn't send us the overview :(\n\nBut we think this film is good!"
+        } else {
+        overviewLabel.text = overviewText
         }
-        if let arrayOfGenres = tv?.genres {
-            var genresText = ""
-            for item in arrayOfGenres {
-                if let genre = item.name {
-                    genresText += "\(genre) "
-                }
-            }
-            self.genresLabel.text = genresText
+        guard let firstReleaseText = tv?.firstAirDate else { return }
+        watchLaterData.releaseDate = firstReleaseText
+        if firstReleaseText == "" {
+            firstReleaseDateLabel.text = "the server didn't send us the release date"
+        } else {
+        firstReleaseDateLabel.text = firstReleaseText
         }
-        if let overviewText = tv?.overview {
-            self.overviewLabel.text = overviewText
-        }
-        if let firstReleaseText = tv?.firstAirDate {
-            self.firstReleaseDateLabel.text = firstReleaseText
-            self.watchLaterData.releaseDate = firstReleaseText
-        }
-        if let lastReleaseText = tv?.lastAirDate {
-            self.lastReleaseDateLabel.text = lastReleaseText
+        guard let lastReleaseText = tv?.lastAirDate else { return }
+        if lastReleaseText == "" {
+            lastReleaseDateLabel.text = "the server didn't send us the release date"
+        } else {
+        lastReleaseDateLabel.text = lastReleaseText
         }
         var seasonesEpisodesRuntimeText = ""
-        if let seasonesCount = tv?.numberOfSeasons {
-            self.watchLaterData.numberOfSeasons = seasonesCount
-            if seasonesCount == 1 {
-                seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
-            } else {
-                seasonesEpisodesRuntimeText += "\(seasonesCount) seasones"
-            }
+        guard let seasonesCount = tv?.numberOfSeasons else { return }
+        watchLaterData.numberOfSeasons = seasonesCount
+        if seasonesCount == 1 {
+            seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
+        } else {
+            seasonesEpisodesRuntimeText += "\(seasonesCount) seasones"
         }
-        if let episodesCount = tv?.numberOfEpisodes {
-            if episodesCount == 1 {
-                seasonesEpisodesRuntimeText += "\n\(episodesCount) episode"
-            } else {
-                seasonesEpisodesRuntimeText += "\n\(episodesCount) episodes"
-            }
+        
+        guard let episodesCount = tv?.numberOfEpisodes else { return }
+        if episodesCount == 1 {
+            seasonesEpisodesRuntimeText += "\n\(episodesCount) episode"
+        } else {
+            seasonesEpisodesRuntimeText += "\n\(episodesCount) episodes"
         }
-        if let episodeRuntime = tv?.episodeRuntime?.first {
-            seasonesEpisodesRuntimeText += "\nEpisode runtime: \(episodeRuntime) minutes"
+        
+        guard let episodeRuntime = tv?.episodeRuntime?.first else { return }
+        if episodeRuntime == 0 {
+            seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
+        } else {
+        seasonesEpisodesRuntimeText += "\nEpisode runtime: \(episodeRuntime) minutes"
+        seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
         }
-        self.seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
-        if let websiteLinkText = tv?.homepage {
-            let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
-            tapGesture.numberOfTapsRequired = 1
-            self.websiteLinkLabel.addGestureRecognizer(tapGesture)
-            self.websiteLinkLabel.text = websiteLinkText
+        guard let websiteLinkText = tv?.homepage else { return }
+        if websiteLinkText == "" {
+            websiteLinkLabel.text =  "Sorry, but try to find it yourself :("
+        } else {
+        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
+        tapGesture.numberOfTapsRequired = 1
+        websiteLinkLabel.addGestureRecognizer(tapGesture)
+        websiteLinkLabel.text = websiteLinkText
         }
-        if let autorNameText = tv?.createdBy?.first?.name {
-            self.autorNameLabel.text = autorNameText
-        }
-        if let profilePath = tv?.createdBy?.first?.profilePath {
-            NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
-        }
-        if let taglineText = tv?.tagline {
-            self.taglineLabel.text = taglineText
-        }
+        guard let autorNameText = tv?.createdBy?.first?.name else { return }
+        autorNameLabel.text = autorNameText
+        
+        guard let profilePath = tv?.createdBy?.first?.profilePath else { return }
+        NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
+        
+        guard let taglineText = tv?.tagline else { return }
+        taglineLabel.text = taglineText
     }
+//    private func setupTvDetailsPage() {
+//        if let id = tv?.id {
+//            self.watchLaterData.id = id
+//        }
+//        if let backdropPath = tv?.backdropPath {
+//            NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
+//        }
+//        if let posterPath = tv?.posterPath {
+//            NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
+//            self.watchLaterData.posterPath = posterPath
+//        }
+//        if let titleText = tv?.originalName ?? tv?.name {
+//            self.titleLabel.text = titleText
+//            self.watchLaterData.title = titleText
+//        }
+//        if let voteAverage = tv?.voteAverage {
+//            if let voteCount = tv?.voteCount {
+//                self.ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
+//            }
+//        }
+//        if let statusText = tv?.status {
+//            self.statusLabel.text = "Status: \(statusText).˚"
+//        }
+//        if let arrayOfGenres = tv?.genres {
+//            var genresText = ""
+//            for item in arrayOfGenres {
+//                if let genre = item.name {
+//                    genresText += "\(genre) "
+//                }
+//            }
+//            self.genresLabel.text = genresText
+//        }
+//        if let overviewText = tv?.overview {
+//            self.overviewLabel.text = overviewText
+//        }
+//        if let firstReleaseText = tv?.firstAirDate {
+//            self.firstReleaseDateLabel.text = firstReleaseText
+//            self.watchLaterData.releaseDate = firstReleaseText
+//        }
+//        if let lastReleaseText = tv?.lastAirDate {
+//            self.lastReleaseDateLabel.text = lastReleaseText
+//        }
+//        var seasonesEpisodesRuntimeText = ""
+//        if let seasonesCount = tv?.numberOfSeasons {
+//            self.watchLaterData.numberOfSeasons = seasonesCount
+//            if seasonesCount == 1 {
+//                seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
+//            } else {
+//                seasonesEpisodesRuntimeText += "\(seasonesCount) seasones"
+//            }
+//        }
+//        if let episodesCount = tv?.numberOfEpisodes {
+//            if episodesCount == 1 {
+//                seasonesEpisodesRuntimeText += "\n\(episodesCount) episode"
+//            } else {
+//                seasonesEpisodesRuntimeText += "\n\(episodesCount) episodes"
+//            }
+//        }
+//        if let episodeRuntime = tv?.episodeRuntime?.first {
+//            seasonesEpisodesRuntimeText += "\nEpisode runtime: \(episodeRuntime) minutes"
+//        }
+//        self.seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
+//        if let websiteLinkText = tv?.homepage {
+//            let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
+//            tapGesture.numberOfTapsRequired = 1
+//            self.websiteLinkLabel.addGestureRecognizer(tapGesture)
+//            self.websiteLinkLabel.text = websiteLinkText
+//        }
+//        if let autorNameText = tv?.createdBy?.first?.name {
+//            self.autorNameLabel.text = autorNameText
+//        }
+//        if let profilePath = tv?.createdBy?.first?.profilePath {
+//            NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
+//        }
+//        if let taglineText = tv?.tagline {
+//            self.taglineLabel.text = taglineText
+//        }
+//    }
 }
 
 // MARK: - CollectionView configuration.

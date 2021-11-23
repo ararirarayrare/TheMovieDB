@@ -6,13 +6,13 @@ class WatchLaterViewController: UIViewController {
     @IBOutlet weak var deleteAllButton: UIButton!
     
     let alertService = AlertService()
-    private var data = [WatchLater]()
+    var data = [WatchLater]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let cellName = String(describing: WatchLaterTableViewCell.self)
         let cellNib = UINib(nibName: cellName, bundle: nil)
-        self.tableView.register(cellNib, forCellReuseIdentifier: cellName)
+        tableView.register(cellNib, forCellReuseIdentifier: cellName)
         setupNavigationBar()
     }
     override func viewWillAppear(_ animated: Bool) {

@@ -6,7 +6,7 @@ class DataManager {
     lazy var realm: Realm = {
         try! Realm()
     }()
-    private var data: Results<WatchLater>!
+    var data: Results<WatchLater>!
     
     func save(object: WatchLater) {
         try? realm.write({

@@ -27,12 +27,12 @@ class WatchLaterViewController: UIViewController {
     
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
         if self.data.count > 0 {
-        let alert = alertService.deleteAlert {
-            self.data.removeAll()
-            DataManager.shared.deleteAll()
-            self.tableView.reloadData()
-        }
-        present(alert, animated: true, completion: nil)
+            let alert = alertService.deleteAlert {
+                self.data.removeAll()
+                DataManager.shared.deleteAll()
+                self.tableView.reloadData()
+            }
+            present(alert, animated: true, completion: nil)
         } else {
             let alert = alertService.alert(text: "Your list is clear!\nNothing to delete")
             let when = DispatchTime.now() + 1
@@ -43,6 +43,8 @@ class WatchLaterViewController: UIViewController {
         }
     }
 }
+
+// MARK: - TableView configuration.
 
 extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,7 +66,7 @@ extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
-
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.beginUpdates()
@@ -79,24 +81,9 @@ extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
         let row = data[indexPath.row]
         let searchId = row.id
         if row.numberOfSeasons == 0 {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
-                NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
-                    movieDetailsViewController.movie = movie
-                    NetworkManager.shared.requestVideoDetails(searchId) { videoList in
-                        movieDetailsViewController.videosList = videoList
-                        self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
-                    }
-                }
-            }
+            pushMovieDetailsViewController(searchId: searchId)
         } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController {
-                NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
-                    tvDetailsViewController.tv = tv
-                    self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
-                }
-            }
+            pushTvDetailsViewController(searchId: searchId)
         }
     }
 }
@@ -104,7 +91,7 @@ extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - My functions
 
 extension WatchLaterViewController {
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         let label = UILabel()
         label.text = "Watch later list"
         label.font = UIFont(name: "Arial Rounded MT Bold", size: 24)
@@ -114,5 +101,25 @@ extension WatchLaterViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .white
+    }
+    private func pushMovieDetailsViewController(searchId: Int) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
+        NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
+            movieDetailsViewController.movie = movie
+            NetworkManager.shared.requestVideoDetails(searchId) { videoList in
+                movieDetailsViewController.videosList = videoList
+                self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+            }
+        }
+        
+    }
+    private func pushTvDetailsViewController(searchId: Int) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController else { return }
+        NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
+            tvDetailsViewController.tv = tv
+            self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
+        }
     }
 }

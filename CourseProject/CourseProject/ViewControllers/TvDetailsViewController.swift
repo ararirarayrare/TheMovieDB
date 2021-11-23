@@ -27,16 +27,16 @@ class TvDetailsViewController: UIViewController {
         super.viewDidLoad()
         let cellName = "TvSeasoneCollectionViewCell"
         let cellNib = UINib(nibName: cellName, bundle: nil)
-        self.collectionView.register(cellNib, forCellWithReuseIdentifier: cellName)
-        self.setupTvDetailsPage()
+        collectionView.register(cellNib, forCellWithReuseIdentifier: cellName)
+        setupTvDetailsPage()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.watchLaterButton.layer.cornerRadius = 10
-        self.posterPathImageView.clipsToBounds = true
-        self.posterPathImageView.layer.cornerRadius = 12
-        self.autorImageView.clipsToBounds = true
-        self.autorImageView.layer.cornerRadius = 10
+        watchLaterButton.layer.cornerRadius = 10
+        posterPathImageView.clipsToBounds = true
+        posterPathImageView.layer.cornerRadius = 12
+        autorImageView.clipsToBounds = true
+        autorImageView.layer.cornerRadius = 10
     }
     
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
@@ -62,183 +62,203 @@ class TvDetailsViewController: UIViewController {
 // MARK: - My functions.
 
 extension TvDetailsViewController {
+    //    private func setupTvDetailsPage() {
+    //        guard let id = tv?.id else { return }
+    //         watchLaterData.id = id
+    //
+    //        guard let backdropPath = tv?.backdropPath else { return }
+    //        NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
+    //
+    //        guard let posterPath = tv?.posterPath else { return }
+    //        NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
+    //         watchLaterData.posterPath = posterPath
+    //
+    //        guard let titleText = tv?.originalName ?? tv?.name else { return }
+    //        titleLabel.text = titleText
+    //        watchLaterData.title = titleText
+    //
+    //        guard let voteAverage = tv?.voteAverage else { return }
+    //        guard let voteCount = tv?.voteCount else { return }
+    //        ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
+    //
+    //
+    //        guard let statusText = tv?.status else { return }
+    //        statusLabel.text = "Status: \(statusText).˚"
+    //
+    //        guard let arrayOfGenres = tv?.genres else { return }
+    //        var genresText = ""
+    //        for item in arrayOfGenres {
+    //            if let genre = item.name {
+    //                genresText += "\(genre) "
+    //            }
+    //        }
+    //        genresLabel.text = genresText
+    //
+    //        guard let overviewText = tv?.overview else { return }
+    //        if overviewText == "" {
+    //            overviewLabel.text = "The server didn't send us the overview :(\n\nBut we think this film is good!"
+    //        } else {
+    //        overviewLabel.text = overviewText
+    //        }
+    //        guard let firstReleaseText = tv?.firstAirDate else { return }
+    //        watchLaterData.releaseDate = firstReleaseText
+    //        if firstReleaseText == "" {
+    //            firstReleaseDateLabel.text = "the server didn't send us the release date"
+    //        } else {
+    //        firstReleaseDateLabel.text = firstReleaseText
+    //        }
+    //        guard let lastReleaseText = tv?.lastAirDate else { return }
+    //        if lastReleaseText == "" {
+    //            lastReleaseDateLabel.text = "the server didn't send us the release date"
+    //        } else {
+    //        lastReleaseDateLabel.text = lastReleaseText
+    //        }
+    //        var seasonesEpisodesRuntimeText = ""
+    //        guard let seasonesCount = tv?.numberOfSeasons else { return }
+    //        watchLaterData.numberOfSeasons = seasonesCount
+    //        if seasonesCount == 1 {
+    //            seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
+    //        } else {
+    //            seasonesEpisodesRuntimeText += "\(seasonesCount) seasones"
+    //        }
+    //
+    //        guard let episodesCount = tv?.numberOfEpisodes else { return }
+    //        if episodesCount == 1 {
+    //            seasonesEpisodesRuntimeText += "\n\(episodesCount) episode"
+    //        } else {
+    //            seasonesEpisodesRuntimeText += "\n\(episodesCount) episodes"
+    //        }
+    //
+    //        guard let episodeRuntime = tv?.episodeRuntime?.first else { return }
+    //        if episodeRuntime == 0 {
+    //            seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
+    //        } else {
+    //        seasonesEpisodesRuntimeText += "\nEpisode runtime: \(episodeRuntime) minutes"
+    //        seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
+    //        }
+    //        guard let websiteLinkText = tv?.homepage else { return }
+    //        if websiteLinkText == "" {
+    //            websiteLinkLabel.text =  "Sorry, but try to find it yourself :("
+    //        } else {
+    //        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
+    //        tapGesture.numberOfTapsRequired = 1
+    //        websiteLinkLabel.addGestureRecognizer(tapGesture)
+    //        websiteLinkLabel.text = websiteLinkText
+    //        }
+    //        guard let autorNameText = tv?.createdBy?.first?.name else { return }
+    //        autorNameLabel.text = autorNameText
+    //
+    //        guard let profilePath = tv?.createdBy?.first?.profilePath else { return }
+    //        NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
+    //
+    //        guard let taglineText = tv?.tagline else { return }
+    //        taglineLabel.text = taglineText
+    //    }
     private func setupTvDetailsPage() {
-        guard let id = tv?.id else { return }
-         watchLaterData.id = id
-        
-        guard let backdropPath = tv?.backdropPath else { return }
-        NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
-        
-        guard let posterPath = tv?.posterPath else { return }
-        NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
-         watchLaterData.posterPath = posterPath
-        
-        guard let titleText = tv?.originalName ?? tv?.name else { return }
-        titleLabel.text = titleText
-        watchLaterData.title = titleText
-        
-        guard let voteAverage = tv?.voteAverage else { return }
-        guard let voteCount = tv?.voteCount else { return }
-        ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
-            
-        
-        guard let statusText = tv?.status else { return }
-        statusLabel.text = "Status: \(statusText).˚"
-        
-        guard let arrayOfGenres = tv?.genres else { return }
-        var genresText = ""
-        for item in arrayOfGenres {
-            if let genre = item.name {
-                genresText += "\(genre) "
+        if let id = tv?.id {
+            watchLaterData.id = id
+        }
+        if let backdropPath = tv?.backdropPath {
+            NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
+        }
+        if let posterPath = tv?.posterPath {
+            NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
+            watchLaterData.posterPath = posterPath
+        }
+        if let titleText = tv?.originalName ?? tv?.name {
+            titleLabel.text = titleText
+            watchLaterData.title = titleText
+        }
+        if let voteAverage = tv?.voteAverage {
+            if let voteCount = tv?.voteCount {
+                ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
             }
         }
-        genresLabel.text = genresText
-        
-        guard let overviewText = tv?.overview else { return }
-        if overviewText == "" {
-            overviewLabel.text = "The server didn't send us the overview :(\n\nBut we think this film is good!"
-        } else {
-        overviewLabel.text = overviewText
+        if let statusText = tv?.status {
+            statusLabel.text = "Status: \(statusText).˚"
         }
-        guard let firstReleaseText = tv?.firstAirDate else { return }
-        watchLaterData.releaseDate = firstReleaseText
-        if firstReleaseText == "" {
-            firstReleaseDateLabel.text = "the server didn't send us the release date"
-        } else {
-        firstReleaseDateLabel.text = firstReleaseText
+        if let arrayOfGenres = tv?.genres {
+            var genresText = ""
+            for item in arrayOfGenres {
+                if let genre = item.name {
+                    genresText += "\(genre) "
+                }
+            }
+            genresLabel.text = genresText
         }
-        guard let lastReleaseText = tv?.lastAirDate else { return }
-        if lastReleaseText == "" {
-            lastReleaseDateLabel.text = "the server didn't send us the release date"
-        } else {
-        lastReleaseDateLabel.text = lastReleaseText
+        if let overviewText = tv?.overview {
+            if overviewText == "" {
+                overviewLabel.text = "The server didn't send us the overview :("
+            } else {
+                overviewLabel.text = overviewText
+            }
+        }
+        if let firstReleaseText = tv?.firstAirDate {
+            if firstReleaseText == "" {
+                firstReleaseDateLabel.text = "the server didn't send us the release date"
+            } else {
+                firstReleaseDateLabel.text = firstReleaseText
+                watchLaterData.releaseDate = firstReleaseText
+            }
+        }
+        if let lastReleaseText = tv?.lastAirDate {
+            if lastReleaseText == "" {
+                lastReleaseDateLabel.text = "the server didn't send us the release date"
+            } else {
+                lastReleaseDateLabel.text = lastReleaseText
+            }
         }
         var seasonesEpisodesRuntimeText = ""
-        guard let seasonesCount = tv?.numberOfSeasons else { return }
-        watchLaterData.numberOfSeasons = seasonesCount
-        if seasonesCount == 1 {
-            seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
-        } else {
-            seasonesEpisodesRuntimeText += "\(seasonesCount) seasones"
+        if let seasonesCount = tv?.numberOfSeasons {
+            watchLaterData.numberOfSeasons = seasonesCount
+            if seasonesCount == 1 {
+                seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
+            } else {
+                seasonesEpisodesRuntimeText += "\(seasonesCount) seasones"
+            }
         }
-        
-        guard let episodesCount = tv?.numberOfEpisodes else { return }
-        if episodesCount == 1 {
-            seasonesEpisodesRuntimeText += "\n\(episodesCount) episode"
-        } else {
-            seasonesEpisodesRuntimeText += "\n\(episodesCount) episodes"
+        if let episodesCount = tv?.numberOfEpisodes {
+            if episodesCount == 1 {
+                seasonesEpisodesRuntimeText += "\n\(episodesCount) episode"
+            } else {
+                seasonesEpisodesRuntimeText += "\n\(episodesCount) episodes"
+            }
         }
-        
-        guard let episodeRuntime = tv?.episodeRuntime?.first else { return }
-        if episodeRuntime == 0 {
-            seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
-        } else {
-        seasonesEpisodesRuntimeText += "\nEpisode runtime: \(episodeRuntime) minutes"
-        seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
+        if let episodeRuntime = tv?.episodeRuntime?.first {
+            if episodeRuntime == 0 {
+                seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
+            } else {
+                seasonesEpisodesRuntimeText += "\nEpisode runtime: \(episodeRuntime) minutes"
+                seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
+            }
         }
-        guard let websiteLinkText = tv?.homepage else { return }
-        if websiteLinkText == "" {
-            websiteLinkLabel.text =  "Sorry, but try to find it yourself :("
-        } else {
-        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
-        tapGesture.numberOfTapsRequired = 1
-        websiteLinkLabel.addGestureRecognizer(tapGesture)
-        websiteLinkLabel.text = websiteLinkText
+        if let websiteLinkText = tv?.homepage {
+            if websiteLinkText == "" {
+                websiteLinkLabel.text =  "Sorry, but try to find it yourself :("
+            } else {
+                let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
+                tapGesture.numberOfTapsRequired = 1
+                websiteLinkLabel.addGestureRecognizer(tapGesture)
+                websiteLinkLabel.text = websiteLinkText
+            }
         }
-        guard let autorNameText = tv?.createdBy?.first?.name else { return }
-        autorNameLabel.text = autorNameText
-        
-        guard let profilePath = tv?.createdBy?.first?.profilePath else { return }
-        NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
-        
-        guard let taglineText = tv?.tagline else { return }
-        taglineLabel.text = taglineText
+        if let autorNameText = tv?.createdBy?.first?.name {
+            autorNameLabel.text = autorNameText
+        }
+        if let profilePath = tv?.createdBy?.first?.profilePath {
+            NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
+        }
+        if let taglineText = tv?.tagline {
+            taglineLabel.text = taglineText
+        }
     }
-//    private func setupTvDetailsPage() {
-//        if let id = tv?.id {
-//            self.watchLaterData.id = id
-//        }
-//        if let backdropPath = tv?.backdropPath {
-//            NetworkManager.shared.setImageFor(imageView: backdropPathImageView, path: backdropPath)
-//        }
-//        if let posterPath = tv?.posterPath {
-//            NetworkManager.shared.setImageFor(imageView: posterPathImageView, path: posterPath)
-//            self.watchLaterData.posterPath = posterPath
-//        }
-//        if let titleText = tv?.originalName ?? tv?.name {
-//            self.titleLabel.text = titleText
-//            self.watchLaterData.title = titleText
-//        }
-//        if let voteAverage = tv?.voteAverage {
-//            if let voteCount = tv?.voteCount {
-//                self.ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
-//            }
-//        }
-//        if let statusText = tv?.status {
-//            self.statusLabel.text = "Status: \(statusText).˚"
-//        }
-//        if let arrayOfGenres = tv?.genres {
-//            var genresText = ""
-//            for item in arrayOfGenres {
-//                if let genre = item.name {
-//                    genresText += "\(genre) "
-//                }
-//            }
-//            self.genresLabel.text = genresText
-//        }
-//        if let overviewText = tv?.overview {
-//            self.overviewLabel.text = overviewText
-//        }
-//        if let firstReleaseText = tv?.firstAirDate {
-//            self.firstReleaseDateLabel.text = firstReleaseText
-//            self.watchLaterData.releaseDate = firstReleaseText
-//        }
-//        if let lastReleaseText = tv?.lastAirDate {
-//            self.lastReleaseDateLabel.text = lastReleaseText
-//        }
-//        var seasonesEpisodesRuntimeText = ""
-//        if let seasonesCount = tv?.numberOfSeasons {
-//            self.watchLaterData.numberOfSeasons = seasonesCount
-//            if seasonesCount == 1 {
-//                seasonesEpisodesRuntimeText += "\(seasonesCount) seasone"
-//            } else {
-//                seasonesEpisodesRuntimeText += "\(seasonesCount) seasones"
-//            }
-//        }
-//        if let episodesCount = tv?.numberOfEpisodes {
-//            if episodesCount == 1 {
-//                seasonesEpisodesRuntimeText += "\n\(episodesCount) episode"
-//            } else {
-//                seasonesEpisodesRuntimeText += "\n\(episodesCount) episodes"
-//            }
-//        }
-//        if let episodeRuntime = tv?.episodeRuntime?.first {
-//            seasonesEpisodesRuntimeText += "\nEpisode runtime: \(episodeRuntime) minutes"
-//        }
-//        self.seasonsEpisodesRuntimeLabel.text = seasonesEpisodesRuntimeText
-//        if let websiteLinkText = tv?.homepage {
-//            let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
-//            tapGesture.numberOfTapsRequired = 1
-//            self.websiteLinkLabel.addGestureRecognizer(tapGesture)
-//            self.websiteLinkLabel.text = websiteLinkText
-//        }
-//        if let autorNameText = tv?.createdBy?.first?.name {
-//            self.autorNameLabel.text = autorNameText
-//        }
-//        if let profilePath = tv?.createdBy?.first?.profilePath {
-//            NetworkManager.shared.setImageFor(imageView: autorImageView, path: profilePath)
-//        }
-//        if let taglineText = tv?.tagline {
-//            self.taglineLabel.text = taglineText
-//        }
-//    }
 }
 
 // MARK: - CollectionView configuration.
 
 extension TvDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let seasons = self.tv?.seasons {
+        if let seasons = tv?.seasons {
             var rows: [TvSeasons] = []
             for item in seasons {
                 if item.posterPath != nil {
@@ -252,7 +272,7 @@ extension TvDetailsViewController: UICollectionViewDataSource, UICollectionViewD
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TvSeasoneCollectionViewCell", for: indexPath) as? TvSeasoneCollectionViewCell
-        if let seasons = self.tv?.seasons {
+        if let seasons = tv?.seasons {
             var posters: [TvSeasons] = []
             for item in seasons {
                 if item.posterPath != nil {
@@ -264,7 +284,7 @@ extension TvDetailsViewController: UICollectionViewDataSource, UICollectionViewD
         return cell!
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = self.collectionView.frame.height
+        let height = collectionView.frame.height
         let width = height * 2/3
         return CGSize(width: width, height: height)
     }

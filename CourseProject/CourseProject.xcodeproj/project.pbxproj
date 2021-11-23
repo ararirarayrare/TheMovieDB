@@ -216,9 +216,9 @@
 		00CEFA60273BF78A00421608 /* CELL */ = {
 			isa = PBXGroup;
 			children = (
-				00CB44B2274A87DD00D386A0 /* WatchLater */,
-				00F39192274845FB00601420 /* TvSeasone */,
 				003557612746731600D9AA05 /* Main */,
+				00F39192274845FB00601420 /* TvSeasone */,
+				00CB44B2274A87DD00D386A0 /* WatchLater */,
 			);
 			path = CELL;
 			sourceTree = "<group>";

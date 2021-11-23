@@ -83,7 +83,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 // MARK: - My functions.
 
 extension MainViewController {
-    func searchResults() {
+    private func searchResults() {
         if searchBar.text == "" {
             NetworkManager.shared.requestTrending(segmentTitle: selectedSegmentTitle) { resultsList in
                 self.resultsList = resultsList
@@ -97,7 +97,7 @@ extension MainViewController {
             }
         }
     }
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         let label = UILabel()
         label.text = "The Movie Data Base"
         label.font = UIFont(name: "Arial Rounded MT Bold", size: 24)
@@ -108,7 +108,7 @@ extension MainViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .white
     }
-    func pushMovieDetailsViewController(searchId: Int) {
+    private func pushMovieDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
@@ -120,7 +120,7 @@ extension MainViewController {
         }
         
     }
-    func pushTvDetailsViewController(searchId: Int) {
+    private func pushTvDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in

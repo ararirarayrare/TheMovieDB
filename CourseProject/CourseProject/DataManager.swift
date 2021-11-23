@@ -10,7 +10,7 @@ class DataManager {
     
     func save(object: WatchLater) {
         try? realm.write({
-           realm.add(object, update: .modified)
+            realm.add(object, update: .modified)
         })
     }
     func get() -> [WatchLater] {

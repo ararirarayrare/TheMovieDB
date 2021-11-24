@@ -5,7 +5,6 @@ class WatchLaterViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deleteAllButton: UIButton!
     
-    let alertService = AlertService()
     var data = [WatchLater]()
     
     override func viewDidLoad() {
@@ -27,14 +26,14 @@ class WatchLaterViewController: UIViewController {
     
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
         if self.data.count > 0 {
-            let alert = alertService.deleteAlert {
+            let alert = AlertService.shared.deleteAlert {
                 self.data.removeAll()
                 DataManager.shared.deleteAll()
                 self.tableView.reloadData()
             }
             present(alert, animated: true, completion: nil)
         } else {
-            let alert = alertService.alert(text: "Your list is clear!\nNothing to delete")
+            let alert = AlertService.shared.alert(text: "Your list is clear!\nNothing to delete")
             let when = DispatchTime.now() + 1
             present(alert, animated: true, completion: nil)
             DispatchQueue.main.asyncAfter(deadline: when) {

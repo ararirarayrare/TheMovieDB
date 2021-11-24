@@ -21,7 +21,6 @@ class TvDetailsViewController: UIViewController {
     
     var tv: JSONTvDetails?
     private var watchLaterData = WatchLater()
-    private let alertService = AlertService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,16 +39,12 @@ class TvDetailsViewController: UIViewController {
     }
     
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
-        let alert = alertService.alert(text: "Saved to watch list!")
+        let alert = AlertService.shared.alert(text: "Saved to watch list!")
         let when = DispatchTime.now() + 1
-        let dataCountBeforeSave = DataManager.shared.data.count
         DataManager.shared.save(object: watchLaterData)
-        let dataCountAfterSave = DataManager.shared.data.count
-        if dataCountAfterSave > dataCountBeforeSave {
-            present(alert, animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: when) {
-                alert.dismiss(animated: true, completion: nil)
-            }
+        present(alert, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            alert.dismiss(animated: true, completion: nil)
         }
     }
     

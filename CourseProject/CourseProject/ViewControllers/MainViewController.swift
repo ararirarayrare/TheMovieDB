@@ -48,7 +48,7 @@ extension MainViewController: UISearchBarDelegate {
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchResults()
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 

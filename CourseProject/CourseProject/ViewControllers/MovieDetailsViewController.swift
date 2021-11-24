@@ -22,7 +22,6 @@ class MovieDetailsViewController: UIViewController {
     var movie: JSONMovieDetails?
     var videosList: [VideoResults]?
     private var watchLaterData = WatchLater()
-    private let alertService = AlertService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +35,12 @@ class MovieDetailsViewController: UIViewController {
         posterPathImageView.layer.cornerRadius = 12
     }
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
-        let alert = alertService.alert(text: "Saved to watch list!")
+        let alert = AlertService.shared.alert(text: "Saved to watch list!")
         let when = DispatchTime.now() + 1
-        let dataCountBeforeSave = DataManager.shared.data.count
         DataManager.shared.save(object: watchLaterData)
-        let dataCountAfterSave = DataManager.shared.data.count
-        if dataCountAfterSave > dataCountBeforeSave {
-            present(alert, animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: when) {
-                alert.dismiss(animated: true, completion: nil)
-            }
+        present(alert, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            alert.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -97,46 +92,46 @@ extension MovieDetailsViewController {
             if overviewText == "" {
                 overviewLabel.text = "The server didn't send us the overview :("
             } else {
-            overviewLabel.text = overviewText
+                overviewLabel.text = overviewText
             }
         }
         if let releaseDateText = movie?.releaseDate {
             if releaseDateText == "" {
                 releaseDateLabel.text = "the server didn't send us the release date"
             } else {
-            releaseDateLabel.text = releaseDateText
-            watchLaterData.releaseDate = releaseDateText
+                releaseDateLabel.text = releaseDateText
+                watchLaterData.releaseDate = releaseDateText
             }
         }
         if let runtimeText = movie?.runtime {
             if runtimeText == 0 {
                 runtimeLabel.text = "The server didn't send us the film duration"
             } else {
-            runtimeLabel.text = "Run time: \(runtimeText) minutes."
+                runtimeLabel.text = "Run time: \(runtimeText) minutes."
             }
         }
         if let budgetText = movie?.budget {
             if budgetText == 0 {
                 budgetLabel.text = "too much.."
             } else {
-            budgetLabel.text = "\(budgetText) USD"
+                budgetLabel.text = "\(budgetText) USD"
             }
         }
         if let revenueText = movie?.revenue {
             if revenueText == 0 {
                 revenueLabel.text = "who knows.."
             } else {
-            revenueLabel.text = "\(revenueText) USD"
+                revenueLabel.text = "\(revenueText) USD"
             }
         }
         if let websiteText = movie?.homepage {
             if websiteText == "" {
                 websiteLabel.text = "Sorry, but try to find it yourself :("
             } else {
-            let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
-            tapGesture.numberOfTapsRequired = 1
-            websiteLabel.addGestureRecognizer(tapGesture)
-            websiteLabel.text = websiteText
+                let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
+                tapGesture.numberOfTapsRequired = 1
+                websiteLabel.addGestureRecognizer(tapGesture)
+                websiteLabel.text = websiteText
             }
         }
         if let videoId = videosList?.first?.key {

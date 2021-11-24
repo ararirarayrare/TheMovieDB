@@ -38,12 +38,16 @@ class MovieDetailsViewController: UIViewController {
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
         let alert = alertService.alert(text: "Saved to watch list!")
         let when = DispatchTime.now() + 1
-            DataManager.shared.save(object: watchLaterData)
+        let dataCountBeforeSave = DataManager.shared.data.count
+        DataManager.shared.save(object: watchLaterData)
+        let dataCountAfterSave = DataManager.shared.data.count
+        if dataCountAfterSave > dataCountBeforeSave {
             present(alert, animated: true, completion: nil)
             DispatchQueue.main.asyncAfter(deadline: when) {
                 alert.dismiss(animated: true, completion: nil)
             }
         }
+    }
     
     @objc func clickLabel() {
         guard let stringURL = movie?.homepage else { return }

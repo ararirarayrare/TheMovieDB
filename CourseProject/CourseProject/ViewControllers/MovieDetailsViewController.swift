@@ -35,9 +35,15 @@ class MovieDetailsViewController: UIViewController {
         posterPathImageView.layer.cornerRadius = 12
     }
     @IBAction func watchLaterButtonPressed(_ sender: UIButton) {
-        let alert = AlertService.shared.alert(text: "Saved to watch list!")
+        var alertText = ""
+        let saved = DataManager.shared.save(object: watchLaterData)
+        if saved {
+            alertText = "Saved to watch list!"
+        } else {
+            alertText = "This film is already saved!"
+        }
+        let alert = AlertService.shared.alert(text: alertText)
         let when = DispatchTime.now() + 1
-        DataManager.shared.save(object: watchLaterData)
         present(alert, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: when) {
             alert.dismiss(animated: true, completion: nil)

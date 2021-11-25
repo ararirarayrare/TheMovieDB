@@ -9,7 +9,7 @@ class AlertService {
         alertViewController.text = text
         return alertViewController
     }
-    func deleteAlert(completion: @escaping () -> Void) -> DeleteAlertViewController {
+    func deleteMovieAlert(completion: @escaping () -> Void) -> DeleteAlertViewController {
         let storyboard = UIStoryboard(name: "Alert", bundle: .main)
         let deleteAlertViewController = storyboard.instantiateViewController(withIdentifier: "DeleteAlertViewController") as! DeleteAlertViewController
         deleteAlertViewController.deleteAction = completion

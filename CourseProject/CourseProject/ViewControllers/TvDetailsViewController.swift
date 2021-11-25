@@ -51,6 +51,9 @@ class TvDetailsViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: when) {
             alert.dismiss(animated: true, completion: nil)
+            if alertText == "Saved to watch list!" {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     

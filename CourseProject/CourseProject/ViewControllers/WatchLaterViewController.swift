@@ -26,10 +26,16 @@ class WatchLaterViewController: UIViewController {
     
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
         if self.data.count > 0 {
-            let alert = AlertService.shared.deleteAlert {
+            let alert = AlertService.shared.deleteMovieAlert {
                 self.data.removeAll()
                 DataManager.shared.deleteAll()
                 self.tableView.reloadData()
+                let alert = AlertService.shared.alert(text: "Watch later list is cleared :)")
+                let when = DispatchTime.now() + 0.5
+                self.present(alert, animated: true, completion: nil)
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    alert.dismiss(animated: true, completion: nil)
+                }
             }
             present(alert, animated: true, completion: nil)
         } else {
@@ -48,7 +54,7 @@ class WatchLaterViewController: UIViewController {
 extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if data.count != 0 {
-            return self.data.count
+            return data.count
         }
         return 0
     }

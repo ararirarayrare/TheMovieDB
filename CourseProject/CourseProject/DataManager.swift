@@ -31,13 +31,13 @@ class DataManager {
         return array
     }
     func deleteAll() {
-        try! realm.write({
+        try! realm.write{
             realm.delete(data)
-        })
+        }
     }
     func removeSelected(object: Object) {
-        try! realm.write({
+        try! realm.write{
             realm.delete(object)
-        })
+        }
     }
 }

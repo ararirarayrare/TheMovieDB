@@ -5,23 +5,27 @@ class MainViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var segmentSelector: UISegmentedControl!
     @IBOutlet weak var mainNavigationItem: UINavigationItem!
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var actorsCollectionView: UICollectionView!
+    @IBOutlet weak var moviesCollectionView: UICollectionView!
     
-    private var resultsList: [Result] = []
+    private var moviesList: [Result] = []
+    private var actorsList: [Actors] = []
     private var selectedSegmentTitle: String = "movie" {
         didSet {
-            searchResults()
+            searchMovies()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchResults()
+        searchActors()
+        searchMovies()
         setupNavigationBar()
         activityIndicator.isHidden = true
-        let cellName = String(describing: MainPageCollectionViewCell.self)
-        let cellNib = UINib(nibName: cellName, bundle: nil)
-        collectionView.register(cellNib, forCellWithReuseIdentifier: "MainPageCollectionViewCell")
+        let actorsCellName = "ActorCollectionViewCell"
+        let moviesCellName = "MainPageCollectionViewCell"
+        actorsCollectionView.register(UINib(nibName: actorsCellName, bundle: nil), forCellWithReuseIdentifier: actorsCellName)
+        moviesCollectionView.register(UINib(nibName: moviesCellName, bundle: nil), forCellWithReuseIdentifier: moviesCellName)
     }
     
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
@@ -41,13 +45,13 @@ extension MainViewController: UISearchBarDelegate {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         DispatchQueue.main.asyncAfter(deadline: when) {
-            self.searchResults()
+            self.searchMovies()
             self.activityIndicator.stopAnimating()
             self.activityIndicator.isHidden = true
         }
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchResults()
+        searchMovies()
         view.endEditing(true)
     }
 }
@@ -56,45 +60,77 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return resultsList.count
+        if collectionView == actorsCollectionView {
+            return actorsList.count
+        }
+        return moviesList.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == actorsCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCollectionViewCell", for: indexPath) as? ActorCollectionViewCell else { return UICollectionViewCell()}
+            cell.configure(with: actorsList[indexPath.item])
+            return cell
+        }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainPageCollectionViewCell", for: indexPath) as? MainPageCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(with: resultsList[indexPath.item])
+        cell.configure(with: moviesList[indexPath.item])
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == actorsCollectionView {
+            let height = actorsCollectionView.frame.height - 12
+            let width = height * 2/3
+            return CGSize(width: width, height: height)
+        }
         let width = (self.view.frame.width - 24) / 3
         let height = width * 1.5
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.endEditing(true)
-        guard let searchId = resultsList[indexPath.item].id else { return }
-        if selectedSegmentTitle == "movie" {
-            pushMovieDetailsViewController(searchId: searchId)
+        if collectionView == actorsCollectionView {
+            print(indexPath.item)
+        } else {
+            guard let searchId = moviesList[indexPath.item].id else { return }
+            if selectedSegmentTitle == "movie" {
+                pushMovieDetailsViewController(searchId: searchId)
+            }
+            if selectedSegmentTitle == "tv" {
+                pushTvDetailsViewController(searchId: searchId)
+            }
         }
-        if selectedSegmentTitle == "tv" {
-            pushTvDetailsViewController(searchId: searchId)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if collectionView == moviesCollectionView {
+            let top = actorsCollectionView.frame.height + 12
+            return UIEdgeInsets(top: top, left: 4, bottom: 0, right: 4)
+        } else {
+            return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         }
     }
 }
 
+
 // MARK: - My functions.
 
 extension MainViewController {
-    private func searchResults() {
+    private func searchMovies() {
         if searchBar.text == "" {
-            NetworkManager.shared.requestTrending(segmentTitle: selectedSegmentTitle) { resultsList in
-                self.resultsList = resultsList
-                self.collectionView.reloadData()
+            NetworkManager.shared.requestTrending(segmentTitle: selectedSegmentTitle) { moviesList in
+                self.moviesList = moviesList
+                self.moviesCollectionView.reloadData()
             }
         }
         if searchBar.text != "" {
-            NetworkManager.shared.requestMovies(searchBar.text!, segmentTitle: selectedSegmentTitle) { resultsList in
-                self.resultsList = resultsList 
-                self.collectionView.reloadData()
+            NetworkManager.shared.requestMovies(searchBar.text!, segmentTitle: selectedSegmentTitle) { moviesList in
+                self.moviesList = moviesList
+                self.moviesCollectionView.reloadData()
             }
+        }
+    }
+    private func searchActors() {
+        NetworkManager.shared.requestActors { actorsList in
+            self.actorsList = actorsList
+            self.actorsCollectionView.reloadData()
         }
     }
     private func setupNavigationBar() {

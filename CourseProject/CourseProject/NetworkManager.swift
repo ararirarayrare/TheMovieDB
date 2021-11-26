@@ -18,6 +18,22 @@ struct NetworkManager {
         }
         completion([])
     }
+    func requestActors(completion:  @escaping(([Actors]) -> ())) {
+        let url = "https://api.themoviedb.org/3/person/popular?api_key=5d24ad36a0d98c3987c8768e13053416"
+        AF.request(url).responseJSON { responce in
+            let decoder = JSONDecoder()
+            guard let responceData = responce.data else { return }
+            guard let data = try? decoder.decode(JSONActors.self, from: responceData) else { return }
+            guard let actors = data.results else { return }
+            var clearActorsList = [Actors]()
+            for item in actors {
+                if item.profilePath != nil {
+                    clearActorsList.append(item)
+                }
+            }
+            completion(clearActorsList)
+        }
+    }
     func requestTrending(segmentTitle: String, completion: @escaping(([Result]) -> ())) {
         let url = "https://api.themoviedb.org/3/trending/\(segmentTitle)/day?api_key=5d24ad36a0d98c3987c8768e13053416"
         AF.request(url).responseJSON { responce in

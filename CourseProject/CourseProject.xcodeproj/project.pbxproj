@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000761C12752531A00FD8953 /* Known_for.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C02752531A00FD8953 /* Known_for.swift */; };
+		000761C3275255A800FD8953 /* ActorDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C2275255A700FD8953 /* ActorDetailsViewController.swift */; };
+		000761C5275257DD00FD8953 /* ActorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C4275257DC00FD8953 /* ActorDetails.swift */; };
+		000761C927525ED200FD8953 /* KnowForCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C727525ED200FD8953 /* KnowForCollectionViewCell.swift */; };
+		000761CA27525ED200FD8953 /* KnowForCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 000761C827525ED200FD8953 /* KnowForCollectionViewCell.xib */; };
 		003557572746610B00D9AA05 /* MovieGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003557512746610B00D9AA05 /* MovieGenres.swift */; };
 		003557582746610B00D9AA05 /* JSONMovieDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003557522746610B00D9AA05 /* JSONMovieDetails.swift */; };
 		0035576627468CEB00D9AA05 /* VideoResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035576427468CEB00D9AA05 /* VideoResults.swift */; };
@@ -47,6 +52,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		000761C02752531A00FD8953 /* Known_for.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Known_for.swift; sourceTree = "<group>"; };
+		000761C2275255A700FD8953 /* ActorDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsViewController.swift; sourceTree = "<group>"; };
+		000761C4275257DC00FD8953 /* ActorDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorDetails.swift; sourceTree = "<group>"; };
+		000761C727525ED200FD8953 /* KnowForCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowForCollectionViewCell.swift; sourceTree = "<group>"; };
+		000761C827525ED200FD8953 /* KnowForCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KnowForCollectionViewCell.xib; sourceTree = "<group>"; };
 		003557512746610B00D9AA05 /* MovieGenres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieGenres.swift; sourceTree = "<group>"; };
 		003557522746610B00D9AA05 /* JSONMovieDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONMovieDetails.swift; sourceTree = "<group>"; };
 		0035576427468CEB00D9AA05 /* VideoResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoResults.swift; sourceTree = "<group>"; };
@@ -102,6 +112,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000761C627525EB200FD8953 /* ActorKnowFor */ = {
+			isa = PBXGroup;
+			children = (
+				000761C727525ED200FD8953 /* KnowForCollectionViewCell.swift */,
+				000761C827525ED200FD8953 /* KnowForCollectionViewCell.xib */,
+			);
+			path = ActorKnowFor;
+			sourceTree = "<group>";
+		};
 		003557612746731600D9AA05 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				00CEFA47273BEF9E00421608 /* MainViewController.swift */,
+				000761C2275255A700FD8953 /* ActorDetailsViewController.swift */,
 				0088217427454526000C4478 /* MovieDetailsViewController.swift */,
 				0088217627454638000C4478 /* TvDetailsViewController.swift */,
 				00CB44B0274A878A00D386A0 /* WatchLaterViewController.swift */,
@@ -234,6 +254,7 @@
 		00CEFA60273BF78A00421608 /* CELL */ = {
 			isa = PBXGroup;
 			children = (
+				000761C627525EB200FD8953 /* ActorKnowFor */,
 				00C5590027514C0D0008315B /* Actors */,
 				003557612746731600D9AA05 /* Main */,
 				00F39192274845FB00601420 /* TvSeasone */,
@@ -247,6 +268,8 @@
 			children = (
 				00DA320D275167F600E4823B /* JSONActors.swift */,
 				00DA320C275167F600E4823B /* Actors.swift */,
+				000761C02752531A00FD8953 /* Known_for.swift */,
+				000761C4275257DC00FD8953 /* ActorDetails.swift */,
 			);
 			path = Actors;
 			sourceTree = "<group>";
@@ -337,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000761CA27525ED200FD8953 /* KnowForCollectionViewCell.xib in Resources */,
 				00CB44B6274A881A00D386A0 /* WatchLaterTableViewCell.xib in Resources */,
 				00CEFA50273BEF9F00421608 /* LaunchScreen.storyboard in Resources */,
 				00A855F22742FBA60060D2AE /* MainPageCollectionViewCell.xib in Resources */,
@@ -404,9 +428,11 @@
 				00CD53F7274BEF8F009F1BE5 /* DeleteAlertViewController.swift in Sources */,
 				00F3918E27482E6300601420 /* JSONTvDetails.swift in Sources */,
 				00CEFA44273BEF9E00421608 /* AppDelegate.swift in Sources */,
+				000761C927525ED200FD8953 /* KnowForCollectionViewCell.swift in Sources */,
 				0073F205274BAB1400D4E795 /* AlertViewController.swift in Sources */,
 				00F3918D27482E6300601420 /* TvCreatedBy.swift in Sources */,
 				00CB44B8274A8B2100D386A0 /* WatchLater.swift in Sources */,
+				000761C12752531A00FD8953 /* Known_for.swift in Sources */,
 				00DA320F275167F600E4823B /* Actors.swift in Sources */,
 				00F3918B27482E6300601420 /* TvGenres.swift in Sources */,
 				0088217727454638000C4478 /* TvDetailsViewController.swift in Sources */,
@@ -419,11 +445,13 @@
 				00F3919127482E6300601420 /* TvSeasons.swift in Sources */,
 				00CB44B1274A878A00D386A0 /* WatchLaterViewController.swift in Sources */,
 				00CEFA5E273BF2BC00421608 /* Result.swift in Sources */,
+				000761C5275257DD00FD8953 /* ActorDetails.swift in Sources */,
 				00DA3210275167F600E4823B /* JSONActors.swift in Sources */,
 				0035576627468CEB00D9AA05 /* VideoResults.swift in Sources */,
 				0078D33E274C281700B3F6C3 /* DataManager.swift in Sources */,
 				00CEFA5F273BF2BC00421608 /* JSONRespose.swift in Sources */,
 				00A855F12742FBA60060D2AE /* MainPageCollectionViewCell.swift in Sources */,
+				000761C3275255A800FD8953 /* ActorDetailsViewController.swift in Sources */,
 				00CB44B5274A881A00D386A0 /* WatchLaterTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

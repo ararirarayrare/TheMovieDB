@@ -34,6 +34,15 @@ struct NetworkManager {
             completion(clearActorsList)
         }
     }
+    func requestActorDetails(_ id: Int, completion: @escaping((ActorDetails) -> ())) {
+        let url = "https://api.themoviedb.org/3/person/\(id)?api_key=5d24ad36a0d98c3987c8768e13053416"
+        AF.request(url).responseJSON { responce in
+            let decoder = JSONDecoder()
+            guard let responceData = responce.data else { return }
+            guard let data = try? decoder.decode(ActorDetails.self, from: responceData) else { return }
+            completion(data)
+        }
+    }
     func requestTrending(segmentTitle: String, completion: @escaping(([Result]) -> ())) {
         let url = "https://api.themoviedb.org/3/trending/\(segmentTitle)/day?api_key=5d24ad36a0d98c3987c8768e13053416"
         AF.request(url).responseJSON { responce in

@@ -6,7 +6,7 @@ class ActorCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        profileImageView.layer.cornerRadius = 30
+        profileImageView.layer.cornerRadius = 35
     }
 
     func configure(with actor: Actors) {

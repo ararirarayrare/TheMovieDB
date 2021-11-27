@@ -88,7 +88,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.endEditing(true)
         if collectionView == actorsCollectionView {
-            print(indexPath.item)
+            guard let searchId = actorsList[indexPath.item].id else { return }
+            pushActorDetailsViewController(searchID: searchId, indexPathItem: indexPath.item)
         } else {
             guard let searchId = moviesList[indexPath.item].id else { return }
             if selectedSegmentTitle == "movie" {
@@ -162,6 +163,16 @@ extension MainViewController {
         NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
             tvDetailsViewController.tv = tv
             self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
+        }
+    }
+    private func pushActorDetailsViewController(searchID: Int, indexPathItem: Int) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let actorDetailsViewController = storyboard.instantiateViewController(withIdentifier: "ActorDetailsViewController") as? ActorDetailsViewController else { return }
+        NetworkManager.shared.requestActorDetails(searchID) { actorDetails in
+            actorDetailsViewController.actorDetails = actorDetails
+            guard let knownFor = self.actorsList[indexPathItem].known_for else { return }
+            actorDetailsViewController.knownForList = knownFor
+            self.navigationController?.pushViewController(actorDetailsViewController, animated: true)
         }
     }
 }

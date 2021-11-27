@@ -170,6 +170,14 @@
                                                     <constraint firstAttribute="width" secondItem="hon-Vh-D6H" secondAttribute="height" multiplier="500:281" id="R4x-K5-RDD"/>
                                                 </constraints>
                                             </imageView>
+                                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WAP-4x-A6e">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="232.5"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0Y8-3m-A1Q">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="232.5"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </view>
+                                                <blurEffect style="dark"/>
+                                            </visualEffectView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FfT-Oh-cz1">
                                                 <rect key="frame" x="10" y="75.5" width="98" height="147"/>
                                                 <constraints>
@@ -368,6 +376,8 @@
                                             <constraint firstAttribute="trailing" secondItem="WxV-68-EWm" secondAttribute="trailing" constant="24" id="WtC-Kl-0s1"/>
                                             <constraint firstAttribute="trailing" secondItem="Gaq-e3-9B1" secondAttribute="trailing" constant="24" id="XGv-nt-c6N"/>
                                             <constraint firstItem="1PU-Du-ju0" firstAttribute="top" secondItem="Pya-Jt-SKx" secondAttribute="bottom" constant="80" id="YUt-2I-rnj"/>
+                                            <constraint firstAttribute="trailing" secondItem="WAP-4x-A6e" secondAttribute="trailing" id="Z3R-7Q-hhZ"/>
+                                            <constraint firstItem="WAP-4x-A6e" firstAttribute="bottom" secondItem="hon-Vh-D6H" secondAttribute="bottom" id="ZiV-8H-fo5"/>
                                             <constraint firstAttribute="trailing" secondItem="WFn-3j-Pd4" secondAttribute="trailing" constant="24" id="al6-fa-bqw"/>
                                             <constraint firstAttribute="bottom" secondItem="1PU-Du-ju0" secondAttribute="bottom" constant="16" id="anR-tx-dol"/>
                                             <constraint firstAttribute="trailing" secondItem="n1p-3Q-J8U" secondAttribute="trailing" constant="24" id="atd-yb-BEl"/>
@@ -377,6 +387,7 @@
                                             <constraint firstItem="tBM-yc-bUT" firstAttribute="top" secondItem="cbd-dR-pJ1" secondAttribute="bottom" constant="16" id="fvo-kB-DNI"/>
                                             <constraint firstItem="VTE-w5-2ph" firstAttribute="top" secondItem="aC0-do-Cyc" secondAttribute="bottom" constant="4" id="gm3-qU-88F"/>
                                             <constraint firstItem="lg2-va-itu" firstAttribute="leading" secondItem="qTq-2B-thm" secondAttribute="leading" constant="24" id="gpE-QK-uSH"/>
+                                            <constraint firstItem="WAP-4x-A6e" firstAttribute="leading" secondItem="qTq-2B-thm" secondAttribute="leading" id="h9W-26-snq"/>
                                             <constraint firstItem="lg2-va-itu" firstAttribute="top" secondItem="WxV-68-EWm" secondAttribute="bottom" constant="4" id="jVv-7b-Nvj"/>
                                             <constraint firstItem="k89-Gc-NBh" firstAttribute="leading" secondItem="qTq-2B-thm" secondAttribute="leading" constant="24" id="jeR-Ln-Msv"/>
                                             <constraint firstItem="n7p-JL-80r" firstAttribute="width" secondItem="qTq-2B-thm" secondAttribute="width" multiplier="0.291063" id="k9E-EK-2aG"/>
@@ -396,6 +407,7 @@
                                             <constraint firstItem="cbd-dR-pJ1" firstAttribute="leading" secondItem="FfT-Oh-cz1" secondAttribute="trailing" constant="8" id="sha-Gb-yZA"/>
                                             <constraint firstItem="n1p-3Q-J8U" firstAttribute="leading" secondItem="qTq-2B-thm" secondAttribute="leading" constant="24" id="v38-24-QKW"/>
                                             <constraint firstItem="vZD-i1-eR0" firstAttribute="top" secondItem="lg2-va-itu" secondAttribute="bottom" constant="16" id="w8h-FE-jDy"/>
+                                            <constraint firstItem="WAP-4x-A6e" firstAttribute="top" secondItem="qTq-2B-thm" secondAttribute="top" id="x3t-YK-hrP"/>
                                             <constraint firstAttribute="trailing" secondItem="hBe-b9-xwT" secondAttribute="trailing" constant="24" id="yPy-ku-hOG"/>
                                             <constraint firstAttribute="trailing" secondItem="k89-Gc-NBh" secondAttribute="trailing" constant="24" id="z1g-ml-Bj8"/>
                                         </constraints>
@@ -436,13 +448,14 @@
                         <outlet property="statusLabel" destination="tBM-yc-bUT" id="zNB-MP-4CF"/>
                         <outlet property="taglineLabel" destination="1PU-Du-ju0" id="n9q-6x-mQo"/>
                         <outlet property="titleLabel" destination="scw-v7-Ct5" id="2M6-mb-wGt"/>
+                        <outlet property="visualEffect" destination="WAP-4x-A6e" id="Wnf-c9-5IO"/>
                         <outlet property="watchLaterButton" destination="Pya-Jt-SKx" id="aHQ-Ml-BHh"/>
                         <outlet property="websiteLinkLabel" destination="n1p-3Q-J8U" id="fOA-yP-gEK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytU-wt-llp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4865" y="259"/>
+            <point key="canvasLocation" x="4862.3188405797109" y="258.48214285714283"/>
         </scene>
         <!--Actor Details View Controller-->
         <scene sceneID="07I-qK-0z9">
@@ -666,6 +679,14 @@
                                                     <constraint firstAttribute="width" secondItem="0FC-AQ-S8l" secondAttribute="height" multiplier="500:281" id="5my-wS-BXE"/>
                                                 </constraints>
                                             </imageView>
+                                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZGh-eo-rwQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="232.5"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dm2-LZ-EkX">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="232.5"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </view>
+                                                <blurEffect style="dark"/>
+                                            </visualEffectView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ratings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y9x-xJ-xOG">
                                                 <rect key="frame" x="116" y="161.5" width="274" height="19.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -846,6 +867,7 @@
                                             <constraint firstItem="7Qr-Cn-mbX" firstAttribute="leading" secondItem="7Zt-F8-XOM" secondAttribute="leading" constant="16" id="WjT-xb-KDY"/>
                                             <constraint firstItem="rDz-aQ-LVZ" firstAttribute="leading" secondItem="2G6-Ou-Udb" secondAttribute="trailing" constant="8" id="Wxo-NE-ANg"/>
                                             <constraint firstAttribute="trailing" secondItem="J7t-lc-KGK" secondAttribute="trailing" constant="24" id="Yqk-40-E6R"/>
+                                            <constraint firstItem="ZGh-eo-rwQ" firstAttribute="bottom" secondItem="0FC-AQ-S8l" secondAttribute="bottom" id="Yra-SX-wNH"/>
                                             <constraint firstItem="HCM-av-0uG" firstAttribute="top" secondItem="3zs-iv-Dqd" secondAttribute="bottom" constant="16" id="Zcq-E9-8if"/>
                                             <constraint firstItem="f0r-ZG-m6h" firstAttribute="leading" secondItem="7Zt-F8-XOM" secondAttribute="leading" constant="24" id="aX9-9F-K0R"/>
                                             <constraint firstAttribute="trailing" secondItem="JnO-w8-PEh" secondAttribute="trailing" constant="24" id="c7g-Jc-715"/>
@@ -862,6 +884,8 @@
                                             <constraint firstAttribute="trailing" secondItem="smZ-aT-Dbh" secondAttribute="trailing" constant="16" id="jGJ-Cg-XE8"/>
                                             <constraint firstItem="Y9x-xJ-xOG" firstAttribute="top" secondItem="smZ-aT-Dbh" secondAttribute="bottom" constant="32" id="mUz-aC-D3i"/>
                                             <constraint firstItem="fxC-Fq-cde" firstAttribute="top" secondItem="g9O-TS-50H" secondAttribute="bottom" constant="16" id="nKt-AL-Gos"/>
+                                            <constraint firstItem="ZGh-eo-rwQ" firstAttribute="leading" secondItem="7Zt-F8-XOM" secondAttribute="leading" id="oXj-Od-JzJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZGh-eo-rwQ" secondAttribute="trailing" id="ocm-SV-d5U"/>
                                             <constraint firstItem="3zs-iv-Dqd" firstAttribute="top" secondItem="f0r-ZG-m6h" secondAttribute="bottom" constant="4" id="p0d-VA-UYn"/>
                                             <constraint firstAttribute="trailing" secondItem="nCW-NP-fZy" secondAttribute="trailing" constant="24" id="sUO-nV-vpU"/>
                                             <constraint firstItem="smZ-aT-Dbh" firstAttribute="leading" secondItem="2G6-Ou-Udb" secondAttribute="trailing" constant="8" id="tN0-Qf-9gg"/>
@@ -871,6 +895,7 @@
                                             <constraint firstAttribute="trailing" secondItem="fxC-Fq-cde" secondAttribute="trailing" constant="24" id="wWQ-c5-Dhl"/>
                                             <constraint firstItem="f0r-ZG-m6h" firstAttribute="top" secondItem="mTo-2y-fkB" secondAttribute="bottom" constant="16" id="wtr-R8-Ehb"/>
                                             <constraint firstAttribute="trailing" secondItem="HCM-av-0uG" secondAttribute="trailing" constant="24" id="x11-CN-sGz"/>
+                                            <constraint firstItem="ZGh-eo-rwQ" firstAttribute="top" secondItem="7Zt-F8-XOM" secondAttribute="top" id="yNv-6W-MmF"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -908,13 +933,14 @@
                         <outlet property="taglineLabel" destination="7gI-Wr-PIv" id="fZe-NY-2pz"/>
                         <outlet property="titleLabel" destination="smZ-aT-Dbh" id="2wr-kj-xUM"/>
                         <outlet property="trailerPlayerView" destination="7Qr-Cn-mbX" id="h9C-xY-6xP"/>
+                        <outlet property="visualEffect" destination="ZGh-eo-rwQ" id="pME-mf-oNz"/>
                         <outlet property="watchLaterButton" destination="bwe-uT-HvB" id="ajl-Vf-0pC"/>
                         <outlet property="websiteLabel" destination="JnO-w8-PEh" id="CGm-z2-RUK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="On3-Up-fPN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3948" y="258"/>
+            <point key="canvasLocation" x="3947.826086956522" y="257.8125"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="VDe-q8-wBK">

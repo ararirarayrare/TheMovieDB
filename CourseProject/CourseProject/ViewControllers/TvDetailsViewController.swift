@@ -3,6 +3,7 @@ import SafariServices
 
 class TvDetailsViewController: UIViewController {
     @IBOutlet weak var backdropPathImageView: UIImageView!
+    @IBOutlet weak var visualEffect: UIVisualEffectView!
     @IBOutlet weak var posterPathImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsLabel: UILabel!
@@ -31,6 +32,7 @@ class TvDetailsViewController: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        visualEffect.alpha = 0.5
         watchLaterButton.layer.cornerRadius = 10
         posterPathImageView.clipsToBounds = true
         posterPathImageView.layer.cornerRadius = 12
@@ -87,11 +89,11 @@ extension TvDetailsViewController {
         }
         if let voteAverage = tv?.voteAverage {
             if let voteCount = tv?.voteCount {
-                ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
+                ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)"
             }
         }
         if let statusText = tv?.status {
-            statusLabel.text = "Status: \(statusText).˚"
+            statusLabel.text = "Status: \(statusText)˚"
         }
         if let arrayOfGenres = tv?.genres {
             var genresText = ""

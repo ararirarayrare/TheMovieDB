@@ -4,6 +4,7 @@ import SafariServices
 
 class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var backdropPathImageView: UIImageView!
+    @IBOutlet weak var visualEffect: UIVisualEffectView!
     @IBOutlet weak var posterPathImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsLabel: UILabel!
@@ -30,6 +31,7 @@ class MovieDetailsViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        visualEffect.alpha = 0.5
         watchLaterButton.layer.cornerRadius = 10
         posterPathImageView.clipsToBounds = true
         posterPathImageView.layer.cornerRadius = 12
@@ -82,11 +84,11 @@ extension MovieDetailsViewController {
         }
         if let voteAverage = movie?.voteAverage {
             if let voteCount = movie?.voteCount {
-                ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)."
+                ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)"
             }
         }
         if let statusText = movie?.status {
-            statusLabel.text = "Status: \(statusText)."
+            statusLabel.text = "Status: \(statusText)"
         }
         if let arrayOfGenres = movie?.genres {
             var genresText = ""
@@ -116,7 +118,7 @@ extension MovieDetailsViewController {
             if runtimeText == 0 {
                 runtimeLabel.text = "The server didn't send us the film duration"
             } else {
-                runtimeLabel.text = "Run time: \(runtimeText) minutes."
+                runtimeLabel.text = "Run time: \(runtimeText) minutes"
             }
         }
         if let budgetText = movie?.budget {

@@ -9,6 +9,7 @@ class ActorDetailsViewController: UIViewController {
     @IBOutlet weak var popularityLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var biographyLabel: UILabel!
+    @IBOutlet weak var biographyFixedLabel: UILabel!
     
     var knownForList: [Known_for] = []
     var actorDetails: ActorDetails?
@@ -60,6 +61,7 @@ extension ActorDetailsViewController: UICollectionViewDelegate, UICollectionView
 
 extension ActorDetailsViewController {
     private func setupActorDetailsPage() {
+        let font = UIFont(name: "Courier New", size: 16)
         if let profilePath = actorDetails?.profile_path {
             NetworkManager.shared.setImageFor(imageView: profileImageView, path: profilePath)
         }
@@ -71,20 +73,29 @@ extension ActorDetailsViewController {
         if let birthDate = actorDetails?.birthday {
             birthDateLabel.text = "Birth date: \(birthDate)"
         } else {
-            birthDateLabel.isHidden = true
+            birthDateLabel.font = font
+            birthDateLabel.text = "No information about birthday.."
         }
         if let birthPlace = actorDetails?.place_of_birth {
             birthPlaceLabel.text = "Born in: \(birthPlace)"
         } else {
-            birthPlaceLabel.isHidden = true
+            birthPlaceLabel.font = font
+            birthPlaceLabel.text = "No information about birthplace.."
         }
         if let popularity = actorDetails?.popularity {
             popularityLabel.text = "Actor ratings: \(popularity)"
+        } else {
+            popularityLabel.font = font
+            popularityLabel.text = "No information about ratings.."
         }
         if let biography = actorDetails?.biography {
             biographyLabel.text = biography
+            if biography == "" {
+                biographyFixedLabel.isHidden = true
+            }
         } else {
             biographyLabel.isHidden = true
+            biographyFixedLabel.isHidden = true
         }
     }
     private func pushMovieDetailsViewController(searchId: Int) {
@@ -92,10 +103,7 @@ extension ActorDetailsViewController {
         guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
             movieDetailsViewController.movie = movie
-            NetworkManager.shared.requestVideoDetails(searchId) { videoList in
-                movieDetailsViewController.videosList = videoList
-                self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
-            }
+            self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
         }
         
     }

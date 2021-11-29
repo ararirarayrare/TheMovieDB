@@ -32,7 +32,7 @@ class TvDetailsViewController: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        visualEffect.alpha = 0.5
+        visualEffect.alpha = 0.75
         watchLaterButton.layer.cornerRadius = 10
         posterPathImageView.clipsToBounds = true
         posterPathImageView.layer.cornerRadius = 12
@@ -49,9 +49,9 @@ class TvDetailsViewController: UIViewController {
             alertText = "This tv-show is already saved!"
         }
         let alert = AlertService.shared.alert(text: alertText)
-        let when = DispatchTime.now() + 1
+        let deadline = DispatchTime.now() + 1
         present(alert, animated: true, completion: nil)
-        DispatchQueue.main.asyncAfter(deadline: when) {
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
             alert.dismiss(animated: true, completion: nil)
             if alertText == "Saved to watch list!" {
                 self.navigationController?.popViewController(animated: true)
@@ -73,6 +73,7 @@ class TvDetailsViewController: UIViewController {
 
 extension TvDetailsViewController {
     private func setupTvDetailsPage() {
+        let font = UIFont(name: "Courier New", size: 16)
         if let id = tv?.id {
             watchLaterData.id = id
         }
@@ -91,9 +92,15 @@ extension TvDetailsViewController {
             if let voteCount = tv?.voteCount {
                 ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)"
             }
+        } else {
+            ratingsLabel.font = font
+            ratingsLabel.text = "No information about ratings.."
         }
         if let statusText = tv?.status {
             statusLabel.text = "Status: \(statusText)˚"
+        } else {
+            statusLabel.font = font
+            statusLabel.text = "No information about about status.."
         }
         if let arrayOfGenres = tv?.genres {
             var genresText = ""
@@ -106,14 +113,16 @@ extension TvDetailsViewController {
         }
         if let overviewText = tv?.overview {
             if overviewText == "" {
-                overviewLabel.text = "The server didn't send us the overview :("
+                overviewLabel.font = font
+                overviewLabel.text = "No information about about overview.."
             } else {
                 overviewLabel.text = overviewText
             }
         }
         if let firstReleaseText = tv?.firstAirDate {
             if firstReleaseText == "" {
-                firstReleaseDateLabel.text = "the server didn't send us the release date"
+                firstReleaseDateLabel.font = font
+                firstReleaseDateLabel.text = "No information about about first release date.."
             } else {
                 firstReleaseDateLabel.text = firstReleaseText
                 watchLaterData.releaseDate = firstReleaseText
@@ -121,7 +130,8 @@ extension TvDetailsViewController {
         }
         if let lastReleaseText = tv?.lastAirDate {
             if lastReleaseText == "" {
-                lastReleaseDateLabel.text = "the server didn't send us the release date"
+                lastReleaseDateLabel.font = font
+                lastReleaseDateLabel.text = "No information about about last release date.."
             } else {
                 lastReleaseDateLabel.text = lastReleaseText
             }
@@ -152,7 +162,8 @@ extension TvDetailsViewController {
         }
         if let websiteLinkText = tv?.homepage {
             if websiteLinkText == "" {
-                websiteLinkLabel.text =  "Sorry, but try to find it yourself :("
+                websiteLinkLabel.font = font
+                websiteLinkLabel.text =  "No information about about tv-show homepage.."
             } else {
                 let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
                 tapGesture.numberOfTapsRequired = 1

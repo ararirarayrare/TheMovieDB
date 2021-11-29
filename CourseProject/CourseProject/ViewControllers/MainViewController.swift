@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     private var selectedSegmentTitle: String = "movie" {
         didSet {
             searchMovies()
+            moviesCollectionView.reloadData()
         }
     }
     
@@ -41,17 +42,19 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let when = DispatchTime.now() + 1
+        let deadline = DispatchTime.now() + 1
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: when) {
-            self.searchMovies()
+        searchMovies()
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
             self.activityIndicator.stopAnimating()
             self.activityIndicator.isHidden = true
+            self.moviesCollectionView.reloadData()
         }
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchMovies()
+        moviesCollectionView.reloadData()
         view.endEditing(true)
     }
 }
@@ -118,13 +121,14 @@ extension MainViewController {
         if searchBar.text == "" {
             NetworkManager.shared.requestTrending(segmentTitle: selectedSegmentTitle) { moviesList in
                 self.moviesList = moviesList
-                self.moviesCollectionView.reloadData()
+                DispatchQueue.main.async {
+                    self.moviesCollectionView.reloadData()
+                }
             }
         }
         if searchBar.text != "" {
             NetworkManager.shared.requestMovies(searchBar.text!, segmentTitle: selectedSegmentTitle) { moviesList in
                 self.moviesList = moviesList
-                self.moviesCollectionView.reloadData()
             }
         }
     }
@@ -150,12 +154,8 @@ extension MainViewController {
         guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
             movieDetailsViewController.movie = movie
-            NetworkManager.shared.requestVideoDetails(searchId) { videoList in
-                movieDetailsViewController.videosList = videoList
-                self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
-            }
+            self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
         }
-        
     }
     private func pushTvDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -176,4 +176,3 @@ extension MainViewController {
         }
     }
 }
-

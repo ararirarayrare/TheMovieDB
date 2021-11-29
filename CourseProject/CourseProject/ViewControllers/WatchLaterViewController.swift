@@ -31,18 +31,18 @@ class WatchLaterViewController: UIViewController {
                 DataManager.shared.deleteAll()
                 self.tableView.reloadData()
                 let alert = AlertService.shared.alert(text: "Watch later list is cleared :)")
-                let when = DispatchTime.now() + 0.5
+                let deadline = DispatchTime.now() + 0.5
                 self.present(alert, animated: true, completion: nil)
-                DispatchQueue.main.asyncAfter(deadline: when) {
+                DispatchQueue.main.asyncAfter(deadline: deadline) {
                     alert.dismiss(animated: true, completion: nil)
                 }
             }
             present(alert, animated: true, completion: nil)
         } else {
             let alert = AlertService.shared.alert(text: "Your list is clear!\nNothing to delete")
-            let when = DispatchTime.now() + 1
+            let deadline = DispatchTime.now() + 1
             present(alert, animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: when) {
+            DispatchQueue.main.asyncAfter(deadline: deadline) {
                 alert.dismiss(animated: true, completion: nil)
             }
         }
@@ -112,10 +112,7 @@ extension WatchLaterViewController {
         guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
             movieDetailsViewController.movie = movie
-            NetworkManager.shared.requestVideoDetails(searchId) { videoList in
-                movieDetailsViewController.videosList = videoList
-                self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
-            }
+            self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
         }
         
     }

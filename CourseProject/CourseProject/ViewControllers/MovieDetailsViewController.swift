@@ -21,7 +21,7 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var taglineLabel: UILabel!
     
     var movie: JSONMovieDetails?
-    var videosList: [VideoResults]?
+//    var video: VideoResults?
     private var watchLaterData = WatchLater()
     
     override func viewDidLoad() {
@@ -31,7 +31,7 @@ class MovieDetailsViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        visualEffect.alpha = 0.5
+        visualEffect.alpha = 0.75
         watchLaterButton.layer.cornerRadius = 10
         posterPathImageView.clipsToBounds = true
         posterPathImageView.layer.cornerRadius = 12
@@ -45,9 +45,9 @@ class MovieDetailsViewController: UIViewController {
             alertText = "This film is already saved!"
         }
         let alert = AlertService.shared.alert(text: alertText)
-        let when = DispatchTime.now() + 1
+        let deadline = DispatchTime.now() + 1
         present(alert, animated: true, completion: nil)
-        DispatchQueue.main.asyncAfter(deadline: when) {
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
             alert.dismiss(animated: true, completion: nil)
             if alertText == "Saved to watch list!" {
                 self.navigationController?.popViewController(animated: true)
@@ -67,6 +67,14 @@ class MovieDetailsViewController: UIViewController {
 
 extension MovieDetailsViewController {
     private func setupMovieDetailsPage() {
+        let font = UIFont(name: "Courier New", size: 16)
+        if let id = movie?.id {
+            NetworkManager.shared.requestVideoDetails(id) { video in
+                if let key = video.key {
+                    self.trailerPlayerView.load(withVideoId: key)
+                }
+            }
+        }
         if let id = movie?.id {
             watchLaterData.id = id
             watchLaterData.numberOfSeasons = 0
@@ -86,9 +94,15 @@ extension MovieDetailsViewController {
             if let voteCount = movie?.voteCount {
                 ratingsLabel.text = "Ratings: \(voteAverage) / 10  (\(voteCount) votes)"
             }
+        } else {
+            ratingsLabel.font = font
+            ratingsLabel.text = "No information about ratings.."
         }
         if let statusText = movie?.status {
             statusLabel.text = "Status: \(statusText)"
+        } else {
+            statusLabel.font = font
+            statusLabel.text = "No information about about status.."
         }
         if let arrayOfGenres = movie?.genres {
             var genresText = ""
@@ -101,14 +115,16 @@ extension MovieDetailsViewController {
         }
         if let overviewText = movie?.overview {
             if overviewText == "" {
-                overviewLabel.text = "The server didn't send us the overview :("
+                overviewLabel.font = font
+                overviewLabel.text = "No imformation about overview :("
             } else {
                 overviewLabel.text = overviewText
             }
         }
         if let releaseDateText = movie?.releaseDate {
             if releaseDateText == "" {
-                releaseDateLabel.text = "the server didn't send us the release date"
+                releaseDateLabel.font = font
+                releaseDateLabel.text = "No information about release date.."
             } else {
                 releaseDateLabel.text = releaseDateText
                 watchLaterData.releaseDate = releaseDateText
@@ -116,37 +132,38 @@ extension MovieDetailsViewController {
         }
         if let runtimeText = movie?.runtime {
             if runtimeText == 0 {
-                runtimeLabel.text = "The server didn't send us the film duration"
+                runtimeLabel.font = font
+                runtimeLabel.text = "No information about movie duration.."
             } else {
                 runtimeLabel.text = "Run time: \(runtimeText) minutes"
             }
         }
         if let budgetText = movie?.budget {
             if budgetText == 0 {
-                budgetLabel.text = "too much.."
+                budgetLabel.font = font
+                budgetLabel.text = "No information about budget.."
             } else {
                 budgetLabel.text = "\(budgetText) USD"
             }
         }
         if let revenueText = movie?.revenue {
             if revenueText == 0 {
-                revenueLabel.text = "who knows.."
+                revenueLabel.font = font
+                revenueLabel.text = "No information about revenue.."
             } else {
                 revenueLabel.text = "\(revenueText) USD"
             }
         }
         if let websiteText = movie?.homepage {
             if websiteText == "" {
-                websiteLabel.text = "Sorry, but try to find it yourself :("
+                websiteLabel.font = font
+                websiteLabel.text = "No information about movie homepage.."
             } else {
                 let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickLabel))
                 tapGesture.numberOfTapsRequired = 1
                 websiteLabel.addGestureRecognizer(tapGesture)
                 websiteLabel.text = websiteText
             }
-        }
-        if let videoId = videosList?.first?.key {
-            trailerPlayerView.load(withVideoId: videoId)
         }
         if let taglineText = movie?.tagline {
             taglineLabel.text = taglineText

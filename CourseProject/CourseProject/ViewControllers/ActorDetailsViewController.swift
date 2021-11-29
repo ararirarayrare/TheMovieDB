@@ -1,7 +1,6 @@
 import UIKit
 
 class ActorDetailsViewController: UIViewController {
-
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var actorNameLabel: UILabel!
     @IBOutlet weak var birthDateLabel: UILabel!
@@ -35,7 +34,8 @@ extension ActorDetailsViewController: UICollectionViewDelegate, UICollectionView
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "KnowForCollectionViewCell", for: indexPath) as? KnowForCollectionViewCell else { return UICollectionViewCell() }
+        let identifier = String(describing: KnowForCollectionViewCell.self)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? KnowForCollectionViewCell else { return UICollectionViewCell() }
         cell.configure(with: knownForList[indexPath.item])
         return cell
     }
@@ -100,7 +100,8 @@ extension ActorDetailsViewController {
     }
     private func pushMovieDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
+        let identifier = String(describing: MovieDetailsViewController.self)
+        guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? MovieDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
             movieDetailsViewController.movie = movie
             self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
@@ -109,7 +110,8 @@ extension ActorDetailsViewController {
     }
     private func pushTvDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController else { return }
+        let identifier = String(describing: TvDetailsViewController.self)
+        guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? TvDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
             tvDetailsViewController.tv = tv
             self.navigationController?.pushViewController(tvDetailsViewController, animated: true)

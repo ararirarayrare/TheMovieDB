@@ -23,8 +23,8 @@ class MainViewController: UIViewController {
         searchMovies()
         setupNavigationBar()
         activityIndicator.isHidden = true
-        let actorsCellName = "ActorCollectionViewCell"
-        let moviesCellName = "MainPageCollectionViewCell"
+        let actorsCellName = String(describing: ActorCollectionViewCell.self)
+        let moviesCellName = String(describing: MainPageCollectionViewCell.self)
         actorsCollectionView.register(UINib(nibName: actorsCellName, bundle: nil), forCellWithReuseIdentifier: actorsCellName)
         moviesCollectionView.register(UINib(nibName: moviesCellName, bundle: nil), forCellWithReuseIdentifier: moviesCellName)
     }
@@ -70,11 +70,13 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == actorsCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCollectionViewCell", for: indexPath) as? ActorCollectionViewCell else { return UICollectionViewCell()}
+            let identifier = String(describing: ActorCollectionViewCell.self)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? ActorCollectionViewCell else { return UICollectionViewCell()}
             cell.configure(with: actorsList[indexPath.item])
             return cell
         }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainPageCollectionViewCell", for: indexPath) as? MainPageCollectionViewCell else { return UICollectionViewCell() }
+        let identifier = String(describing: MainPageCollectionViewCell.self)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? MainPageCollectionViewCell else { return UICollectionViewCell() }
         cell.configure(with: moviesList[indexPath.item])
         return cell
     }
@@ -151,7 +153,8 @@ extension MainViewController {
     }
     private func pushMovieDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
+        let identifier = String(describing: MovieDetailsViewController.self)
+        guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? MovieDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
             movieDetailsViewController.movie = movie
             self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
@@ -159,7 +162,8 @@ extension MainViewController {
     }
     private func pushTvDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController else { return }
+        let identifier = String(describing: TvDetailsViewController.self)
+        guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? TvDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
             tvDetailsViewController.tv = tv
             self.navigationController?.pushViewController(tvDetailsViewController, animated: true)
@@ -167,7 +171,8 @@ extension MainViewController {
     }
     private func pushActorDetailsViewController(searchID: Int, indexPathItem: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let actorDetailsViewController = storyboard.instantiateViewController(withIdentifier: "ActorDetailsViewController") as? ActorDetailsViewController else { return }
+        let identifier = String(describing: ActorDetailsViewController.self)
+        guard let actorDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? ActorDetailsViewController else { return }
         NetworkManager.shared.requestActorDetails(searchID) { actorDetails in
             actorDetailsViewController.actorDetails = actorDetails
             guard let knownFor = self.actorsList[indexPathItem].known_for else { return }

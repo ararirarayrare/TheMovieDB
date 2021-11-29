@@ -1,7 +1,6 @@
 import UIKit
 
 class WatchLaterViewController: UIViewController {
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deleteAllButton: UIButton!
     
@@ -10,8 +9,7 @@ class WatchLaterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let cellName = String(describing: WatchLaterTableViewCell.self)
-        let cellNib = UINib(nibName: cellName, bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: cellName)
+        tableView.register(UINib(nibName: cellName, bundle: nil), forCellReuseIdentifier: cellName)
         setupNavigationBar()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +57,8 @@ extension WatchLaterViewController: UITableViewDataSource, UITableViewDelegate {
         return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WatchLaterTableViewCell") as? WatchLaterTableViewCell
+        let identifier = String(describing: WatchLaterTableViewCell.self)
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? WatchLaterTableViewCell
         let item = data[indexPath.row]
         cell?.configure(with: item)
         
@@ -109,7 +108,8 @@ extension WatchLaterViewController {
     }
     private func pushMovieDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController else { return }
+        let identifier = String(describing: MovieDetailsViewController.self)
+        guard let movieDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? MovieDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedMovie(searchId) { movie in
             movieDetailsViewController.movie = movie
             self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
@@ -118,7 +118,8 @@ extension WatchLaterViewController {
     }
     private func pushTvDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: "TvDetailsViewController") as? TvDetailsViewController else { return }
+        let identifier = String(describing: TvDetailsViewController.self)
+        guard let tvDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? TvDetailsViewController else { return }
         NetworkManager.shared.requestDetailsForSelectedTV(searchId) { tv in
             tvDetailsViewController.tv = tv
             self.navigationController?.pushViewController(tvDetailsViewController, animated: true)

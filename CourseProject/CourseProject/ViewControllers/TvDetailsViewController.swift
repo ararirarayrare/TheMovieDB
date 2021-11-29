@@ -25,9 +25,8 @@ class TvDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let cellName = "TvSeasoneCollectionViewCell"
-        let cellNib = UINib(nibName: cellName, bundle: nil)
-        collectionView.register(cellNib, forCellWithReuseIdentifier: cellName)
+        let seasonesCellName = String(describing: TvSeasoneCollectionViewCell.self)
+        collectionView.register(UINib(nibName: seasonesCellName, bundle: nil), forCellWithReuseIdentifier: seasonesCellName)
         setupTvDetailsPage()
     }
     override func viewDidLayoutSubviews() {
@@ -187,20 +186,18 @@ extension TvDetailsViewController {
 
 extension TvDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let seasons = tv?.seasons {
-            var rows: [TvSeasons] = []
-            for item in seasons {
-                if item.posterPath != nil {
-                    rows.append(item)
-                }
+        guard let seasons = tv?.seasons else { return 0 }
+        var rows: [TvSeasons] = []
+        for item in seasons {
+            if item.posterPath != nil {
+                rows.append(item)
             }
-            return rows.count
-        } else {
-            return 0
         }
+        return rows.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TvSeasoneCollectionViewCell", for: indexPath) as? TvSeasoneCollectionViewCell
+        let identifier = String(describing: TvSeasoneCollectionViewCell.self)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? TvSeasoneCollectionViewCell else { return UICollectionViewCell() }
         if let seasons = tv?.seasons {
             var posters: [TvSeasons] = []
             for item in seasons {
@@ -208,9 +205,9 @@ extension TvDetailsViewController: UICollectionViewDataSource, UICollectionViewD
                     posters.append(item)
                 }
             }
-            cell?.configureWith(seasone: posters[indexPath.item])
+            cell.configureWith(seasone: posters[indexPath.item])
         }
-        return cell!
+        return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.frame.height

@@ -6,9 +6,11 @@ struct NetworkManager {
     static let shared = NetworkManager()
     init(){}
     private let queue = DispatchQueue.global()
+    private let baseURL = "https://api.themoviedb.org/3/"
+    private let apiKey = "?api_key=5d24ad36a0d98c3987c8768e13053416"
     
     func requestMovies(_ query: String, segmentTitle: String, completion: @escaping(([Result]) -> ())) {
-        let url = "https://api.themoviedb.org/3/search/\(segmentTitle)?api_key=5d24ad36a0d98c3987c8768e13053416&query="
+        let url = baseURL + "search/\(segmentTitle)" + apiKey + "&query="
         let newQuery = query.replacingOccurrences(of: " ", with: "+")
         queue.async {
             AF.request(url + newQuery).responseJSON { responce in
@@ -22,7 +24,7 @@ struct NetworkManager {
         }
     }
     func requestActors(completion:  @escaping(([Actors]) -> ())) {
-        let url = "https://api.themoviedb.org/3/person/popular?api_key=5d24ad36a0d98c3987c8768e13053416"
+        let url = baseURL + "person/popular" + apiKey
         queue.async {
             AF.request(url).responseJSON { responce in
                 let decoder = JSONDecoder()
@@ -40,18 +42,18 @@ struct NetworkManager {
         }
     }
     func requestActorDetails(_ id: Int, completion: @escaping((ActorDetails) -> ())) {
-        let url = "https://api.themoviedb.org/3/person/\(id)?api_key=5d24ad36a0d98c3987c8768e13053416"
+        let url = baseURL + "person/\(id)" + apiKey
         queue.async {
             AF.request(url).responseJSON { responce in
                 let decoder = JSONDecoder()
                 guard let responceData = responce.data else { return }
                 guard let data = try? decoder.decode(ActorDetails.self, from: responceData) else { return }
-                    completion(data)
+                completion(data)
             }
         }
     }
     func requestTrending(segmentTitle: String, completion: @escaping(([Result]) -> ())) {
-        let url = "https://api.themoviedb.org/3/trending/\(segmentTitle)/day?api_key=5d24ad36a0d98c3987c8768e13053416"
+        let url = baseURL + "trending/\(segmentTitle)/day" + apiKey
         queue.async {
             AF.request(url).responseJSON { responce in
                 let decoder = JSONDecoder()
@@ -64,7 +66,7 @@ struct NetworkManager {
         }
     }
     func requestDetailsForSelectedMovie(_ id: Int, completion: @escaping((JSONMovieDetails) -> ())) {
-        let url = "https://api.themoviedb.org/3/movie/\(id)?api_key=5d24ad36a0d98c3987c8768e13053416"
+        let url = baseURL + "movie/\(id)" + apiKey
         queue.async {
             AF.request(url).responseJSON { responce in
                 let decoder = JSONDecoder()
@@ -75,7 +77,7 @@ struct NetworkManager {
         }
     }
     func requestDetailsForSelectedTV(_ id: Int, completion: @escaping((JSONTvDetails) -> ())) {
-        let url = "https://api.themoviedb.org/3/tv/\(id)?api_key=5d24ad36a0d98c3987c8768e13053416"
+        let url = baseURL + "tv/\(id)" + apiKey
         queue.async {
             AF.request(url).responseJSON { responce in
                 let decoder = JSONDecoder()
@@ -86,7 +88,7 @@ struct NetworkManager {
         }
     }
     func requestVideoDetails(_ id: Int, completion: @escaping((VideoResults) -> ())) {
-        let url = "https://api.themoviedb.org/3/movie/\(id)/videos?api_key=5d24ad36a0d98c3987c8768e13053416"
+        let url = baseURL + "movie/\(id)/videos" + apiKey
         queue.async {
             AF.request(url).responseJSON { responce in
                 let decoder = JSONDecoder()

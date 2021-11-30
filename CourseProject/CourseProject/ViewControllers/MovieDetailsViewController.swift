@@ -21,7 +21,6 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var taglineLabel: UILabel!
     
     var movie: JSONMovieDetails?
-    //    var video: VideoResults?
     private var watchLaterData = WatchLater()
     
     override func viewDidLoad() {

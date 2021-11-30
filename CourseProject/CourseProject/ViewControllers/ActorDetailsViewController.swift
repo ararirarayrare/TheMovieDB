@@ -16,7 +16,7 @@ class ActorDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let cellName = "KnowForCollectionViewCell"
+        let cellName = String(describing: KnowForCollectionViewCell.self)
         collectionView.register(UINib(nibName: cellName, bundle: nil), forCellWithReuseIdentifier: cellName)
         setupActorDetailsPage()
     }
@@ -31,8 +31,6 @@ extension ActorDetailsViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return knownForList.count
     }
-    
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifier = String(describing: KnowForCollectionViewCell.self)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? KnowForCollectionViewCell else { return UICollectionViewCell() }
@@ -40,8 +38,9 @@ extension ActorDetailsViewController: UICollectionViewDelegate, UICollectionView
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let aspectRatio: CGFloat = 2/3
         let height = collectionView.frame.height
-        let width = height * 2/3
+        let width = height * aspectRatio
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -54,7 +53,6 @@ extension ActorDetailsViewController: UICollectionViewDelegate, UICollectionView
             pushTvDetailsViewController(searchId: searchId)
         }
     }
-    
 }
 
 // MARK: - My functions.
@@ -106,7 +104,6 @@ extension ActorDetailsViewController {
             movieDetailsViewController.movie = movie
             self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
         }
-        
     }
     private func pushTvDetailsViewController(searchId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

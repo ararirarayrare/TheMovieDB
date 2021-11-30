@@ -82,12 +82,17 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == actorsCollectionView {
-            let height = actorsCollectionView.frame.height - 12
-            let width = height * 2/3
+            let aspectRatio: CGFloat = 2/3
+            let topAndBottomSpacing: CGFloat = 12
+            let height = actorsCollectionView.frame.height - topAndBottomSpacing
+            let width = height * aspectRatio
             return CGSize(width: width, height: height)
         }
-        let width = (self.view.frame.width - 24) / 3
-        let height = width * 1.5
+        let horizontalSpacing: CGFloat = 24
+        let cellsPerLine: CGFloat = 3
+        let aspectRatio: CGFloat = 1.5
+        let width = (self.view.frame.width - horizontalSpacing) / cellsPerLine
+        let height = width * aspectRatio
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -107,7 +112,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if collectionView == moviesCollectionView {
-            let top = actorsCollectionView.frame.height + 12
+            let verticalSpacing: CGFloat = 12
+            let top = actorsCollectionView.frame.height + verticalSpacing
             return UIEdgeInsets(top: top, left: 4, bottom: 0, right: 4)
         } else {
             return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)

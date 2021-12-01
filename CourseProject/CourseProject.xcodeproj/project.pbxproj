@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		000761C12752531A00FD8953 /* Known_for.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C02752531A00FD8953 /* Known_for.swift */; };
+		000761C12752531A00FD8953 /* KnownFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C02752531A00FD8953 /* KnownFor.swift */; };
 		000761C3275255A800FD8953 /* ActorDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C2275255A700FD8953 /* ActorDetailsViewController.swift */; };
 		000761C5275257DD00FD8953 /* ActorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C4275257DC00FD8953 /* ActorDetails.swift */; };
 		000761C927525ED200FD8953 /* KnowForCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000761C727525ED200FD8953 /* KnowForCollectionViewCell.swift */; };
@@ -52,7 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		000761C02752531A00FD8953 /* Known_for.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Known_for.swift; sourceTree = "<group>"; };
+		000761C02752531A00FD8953 /* KnownFor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownFor.swift; sourceTree = "<group>"; };
 		000761C2275255A700FD8953 /* ActorDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsViewController.swift; sourceTree = "<group>"; };
 		000761C4275257DC00FD8953 /* ActorDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorDetails.swift; sourceTree = "<group>"; };
 		000761C727525ED200FD8953 /* KnowForCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowForCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 			children = (
 				00DA320D275167F600E4823B /* JSONActors.swift */,
 				00DA320C275167F600E4823B /* Actors.swift */,
-				000761C02752531A00FD8953 /* Known_for.swift */,
+				000761C02752531A00FD8953 /* KnownFor.swift */,
 				000761C4275257DC00FD8953 /* ActorDetails.swift */,
 			);
 			path = Actors;
@@ -432,7 +432,7 @@
 				0073F205274BAB1400D4E795 /* AlertViewController.swift in Sources */,
 				00F3918D27482E6300601420 /* TvCreatedBy.swift in Sources */,
 				00CB44B8274A8B2100D386A0 /* WatchLater.swift in Sources */,
-				000761C12752531A00FD8953 /* Known_for.swift in Sources */,
+				000761C12752531A00FD8953 /* KnownFor.swift in Sources */,
 				00DA320F275167F600E4823B /* Actors.swift in Sources */,
 				00F3918B27482E6300601420 /* TvGenres.swift in Sources */,
 				0088217727454638000C4478 /* TvDetailsViewController.swift in Sources */,

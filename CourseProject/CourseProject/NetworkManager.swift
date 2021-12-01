@@ -33,7 +33,7 @@ struct NetworkManager {
                 guard let actors = data.results else { return }
                 var clearActorsList = [Actors]()
                 for item in actors {
-                    if item.profilePath != nil && item.known_for != nil  {
+                    if item.profilePath != nil && item.knownFor != nil  {
                         clearActorsList.append(item)
                     }
                 }

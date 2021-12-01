@@ -181,7 +181,7 @@ extension MainViewController {
         guard let actorDetailsViewController = storyboard.instantiateViewController(withIdentifier: identifier) as? ActorDetailsViewController else { return }
         NetworkManager.shared.requestActorDetails(searchID) { actorDetails in
             actorDetailsViewController.actorDetails = actorDetails
-            guard let knownFor = self.actorsList[indexPathItem].known_for else { return }
+            guard let knownFor = self.actorsList[indexPathItem].knownFor else { return }
             actorDetailsViewController.knownForList = knownFor
             self.navigationController?.pushViewController(actorDetailsViewController, animated: true)
         }

@@ -5,18 +5,18 @@ struct ActorDetails: Codable {
 	let birthday : String?
 	let id : Int?
 	let name : String?
-	let place_of_birth : String?
+	let placeOfBirth : String?
 	let popularity : Double?
-	let profile_path : String?
+	let profilePath : String?
 
 	enum CodingKeys: String, CodingKey {
 		case biography = "biography"
 		case birthday = "birthday"
 		case id = "id"
 		case name = "name"
-		case place_of_birth = "place_of_birth"
+		case placeOfBirth = "place_of_birth"
 		case popularity = "popularity"
-		case profile_path = "profile_path"
+		case profilePath = "profile_path"
 	}
 
 	init(from decoder: Decoder) throws {
@@ -25,8 +25,8 @@ struct ActorDetails: Codable {
 		birthday = try values.decodeIfPresent(String.self, forKey: .birthday)
 		id = try values.decodeIfPresent(Int.self, forKey: .id)
 		name = try values.decodeIfPresent(String.self, forKey: .name)
-		place_of_birth = try values.decodeIfPresent(String.self, forKey: .place_of_birth)
+        placeOfBirth = try values.decodeIfPresent(String.self, forKey: .placeOfBirth)
 		popularity = try values.decodeIfPresent(Double.self, forKey: .popularity)
-		profile_path = try values.decodeIfPresent(String.self, forKey: .profile_path)
+        profilePath = try values.decodeIfPresent(String.self, forKey: .profilePath)
 	}
 }

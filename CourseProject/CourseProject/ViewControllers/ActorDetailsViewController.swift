@@ -10,7 +10,7 @@ class ActorDetailsViewController: UIViewController {
     @IBOutlet weak var biographyLabel: UILabel!
     @IBOutlet weak var biographyFixedLabel: UILabel!
     
-    var knownForList: [Known_for] = []
+    var knownForList: [KnownFor] = []
     var actorDetails: ActorDetails?
     
     
@@ -44,7 +44,7 @@ extension ActorDetailsViewController: UICollectionViewDelegate, UICollectionView
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let mediaType = knownForList[indexPath.item].media_type else { return }
+        guard let mediaType = knownForList[indexPath.item].mediaType else { return }
         guard let searchId = knownForList[indexPath.item].id else { return }
         if mediaType == "movie" {
             pushMovieDetailsViewController(searchId: searchId)
@@ -60,7 +60,7 @@ extension ActorDetailsViewController: UICollectionViewDelegate, UICollectionView
 extension ActorDetailsViewController {
     private func setupActorDetailsPage() {
         let font = UIFont(name: "Courier New", size: 16)
-        if let profilePath = actorDetails?.profile_path {
+        if let profilePath = actorDetails?.profilePath {
             NetworkManager.shared.setImageFor(imageView: profileImageView, path: profilePath)
         }
         if let actorName = actorDetails?.name {
@@ -74,7 +74,7 @@ extension ActorDetailsViewController {
             birthDateLabel.font = font
             birthDateLabel.text = "No information about birthday.."
         }
-        if let birthPlace = actorDetails?.place_of_birth {
+        if let birthPlace = actorDetails?.placeOfBirth {
             birthPlaceLabel.text = "Born in: \(birthPlace)"
         } else {
             birthPlaceLabel.font = font

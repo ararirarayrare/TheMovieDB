@@ -8,8 +8,8 @@ class KnowForCollectionViewCell: UICollectionViewCell {
         posterImageView.layer.cornerRadius = 12
     }
     
-    func configure(with knownFor: Known_for) {
-        if let posterPath = knownFor.poster_path {
+    func configure(with knownFor: KnownFor) {
+        if let posterPath = knownFor.posterPath {
             NetworkManager.shared.setImageFor(imageView: posterImageView, path: posterPath)
         }
     }
